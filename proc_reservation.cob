@@ -17,8 +17,6 @@
          END-IF
          END-READ
        END-PERFORM.
-      *AJOUTER LA LIGNE SUIVANTE POUR CORRIGER PB DE L'AJOUT :   
-       CLOSE freservations.
      ***********RECHERCHER CLIENT************************************
        RECHERCHER_CLIENT.
        OPEN INPUT fclients
@@ -72,7 +70,7 @@
           READ frestaurants NEXT
           AT END MOVE 1 TO Wfin
           NOT AT END
-          IF WvilleRst = fr_ville AND fr_actif = 1 THEN
+          IF WvilleRst = fr_ville AND fr_actif = 2 THEN
            DISPLAY 'identifiant: ',fr_id
          DISPLAY 'adresse: ',fr_rue,' ', fr_ville,' ', fr_codeP         
           END-IF
@@ -90,17 +88,17 @@
        END-PERFORM
        CLOSE frestaurants.
      ****************CALCUL NB PLACES REST **************************
-       NOMBRE_PLACE_RESTANTE.
+       NOMBRE_PLACE_RESTANTE.       
        MOVE 0 TO WplacesOccupees
        MOVE 0 TO Wfin
        MOVE 0 TO WplacesOccupees
-       OPEN INPUT frestaurants       
+       OPEN INPUT frestaurants              
        MOVE WidRestSauv TO frs_idrest
        MOVE WidRestSauv TO fr_id
        READ frestaurants
          INVALID KEY DISPLAY 'erreur'
          NOT INVALID KEY
-              MOVE fr_nbPlaces TO WcapaciteRestaurant
+              MOVE fr_nbPlaces TO WcapaciteRestaurant                
        CLOSE frestaurants
        START freservations, KEY IS = frs_idrest
        INVALID KEY 
@@ -128,10 +126,7 @@
                      
      **********************NOUVELLE RESERVATION *********************
        AJOUTER_RESA.       
-       OPEN I-O freservations      
-       IF frs_stat = 35 THEN
-         OPEN OUTPUT freservations
-       END-IF
+       OPEN I-O freservations
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
          DISPLAY 'Donnez les informations de la réservation'
          PERFORM RECHERCHER_NUM_RESA
@@ -164,7 +159,7 @@
            PERFORM WITH TEST AFTER UNTIL  frs_heure_minute <= 59
              DISPLAY 'minute: (59)'
              ACCEPT frs_heure_minute
-           END-PERFORM 
+           END-PERFORM              
              MOVE frs_heure TO WheureMin
              MOVE frs_heure TO WheureMax
              MOVE frs_heure TO WheureSauv
@@ -187,13 +182,18 @@
          MOVE WidCliSauv TO frs_idcli
          MOVE Wdate TO frs_date
          MOVE WheureSauv TO frs_heure
+         MOVE 0 TO frs_prix
          MOVE 1 TO Wlibre
          PERFORM WITH TEST AFTER UNTIL Wlibre = 0
            DISPLAY 'Nombre de personnes:'
            ACCEPT frs_nbPersonnes 
            IF frs_nbPersonnes <= WPlacesLibres THEN 
             WRITE resaTampon
-            DISPLAY 'statut:',frs_stat
+            IF frs_stat = 0 THEN
+               DISPLAY 'Nouvelle réservation enregistrée'
+            ELSE
+               DISPLAY 'Erreur lors de l''enregistrement'
+            END-IF
             MOVE 0 TO Wlibre
            ELSE
             SUBTRACT WplacesOccupees FROM WplacesLibres
@@ -234,7 +234,8 @@
       -         frs_date_mois,'/',frs_date_annee
        DISPLAY 'Heure de la réservation: ', frs_heure_heure,':'
       -         frs_heure_minute
-       DISPLAY 'Nombre de personne: ', frs_nbPersonnes.
+       DISPLAY 'Nombre de personne: ', frs_nbPersonnes
+       DISPLAY 'Prix Payé: ', frs_prix.
 
      **************CONSULTER RESERVATIONS ***************************
        CONSULTER_RESA.
@@ -271,8 +272,13 @@
               NOT AT END                
                DISPLAY Wdate
                DISPLAY frs_date
-               IF frs_date >= Wdate THEN
+               IF frs_date_annee >= Wdate_annee THEN
+                 IF frs_date_mois > Wdate_mois THEN
                  PERFORM AFFICHER_RESA
+                 ELSE IF frs_date_mois = Wdate_mois 
+     -  AND frs_date_jour >= Wdate_jour THEN
+                     PERFORM AFFICHER_RESA
+                 END-IF
                END-IF
             END-READ
           END-PERFORM 
@@ -553,22 +559,24 @@
           MOVE 0 TO Wnbchoix
 
           PERFORM WITH TEST AFTER UNTIL Wfin = 1 AND  
-     -  WidRestSauv =frs_idrest
+     -  WidRestSauv = frs_idrest
            READ freservations NEXT
             AT END
              MOVE 1 TO Wfin
             NOT AT END
 
              IF frs_date_annee = Wannee AND frs_date_mois = Wmois THEN
-
-              ADD frs_prix TO WcaMensuel
-              ADD 1 TO WplatsAchetes
+              IF frs_prix > 0 THEN
+                ADD frs_prix TO WcaMensuel
+                ADD frs_nbPersonnes TO WplatsAchetes
+              END-IF
 
              ELSE IF frs_date_annee = WanneeAnt
      -         AND frs_date_mois = Wmois THEN
-
-              ADD frs_prix TO WcaMensuelAnt
-              ADD 1 TO WplatsAchetesAnt
+              IF frs_prix > 0 THEN
+                ADD frs_prix TO WcaMensuelAnt
+                ADD frs_nbPersonnes TO WplatsAchetesAnt
+              END-IF
              END-IF
 
             END-READ
@@ -594,11 +602,11 @@
        ACCEPT frs_id
        READ freservations
         INVALID KEY
-          DISPLAY 'Erreur lors de la saisie de l identifiant'
+          DISPLAY 'Aucune réservation ne correspond à cet identifiant'
         NOT INVALID KEY
       *   DISPLAY 'Prix :',frs_prix
-         IF frs_prix = 0 THEN
-          Move 0 TO WNbPers       
+         IF frs_prix EQUAL 0 THEN
+          MOVE 0 TO WNbPers       
           MOVE 0 TO Wfin
           MOVE 0 TO WnbMenus
           MOVE 0 TO WprixTotal
@@ -627,10 +635,10 @@
              IF WNbPers=1 THEN
                 MOVE fm_nom TO WresMenu
                 
-               ELSE
-			    STRING WresMenu "/" fm_nom 
-			    DELIMITED BY SPACE INTO WresMenu
-                     END-IF
+             ELSE
+               STRING WresMenu "/" fm_nom 
+               DELIMITED BY SPACE INTO WresMenu
+             END-IF
                  ADD fm_prix TO WprixTotal
 			    
               END-READ  
@@ -643,7 +651,7 @@
          ELSE
 	       DISPLAY 'La reservation a deja ete payee'
 		   
-	       END-IF  
+         END-IF  
          END-READ
        CLOSE freservations.
        

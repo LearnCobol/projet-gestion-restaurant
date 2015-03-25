@@ -211,38 +211,38 @@
 
         PROCEDURE DIVISION.
 
-         OPEN EXTEND fmenus
+         OPEN I-O fmenus
          IF fm_stat = 35 THEN
           OPEN OUTPUT fmenus
          END-IF
          CLOSE fmenus
 
-         OPEN EXTEND fplats
+         OPEN I-O fplats
          IF fp_stat = 35 THEN
           OPEN OUTPUT fplats
          END-IF
          CLOSE fplats
 
-         OPEN EXTEND fclients
+         OPEN I-O fclients
          IF fc_stat = 35 THEN
           OPEN OUTPUT fclients
          END-IF
          CLOSE fclients
          MOVE 1 TO Wmenu
 
-         OPEN EXTEND frestaurants
+         OPEN I-O frestaurants
          IF fr_stat = 35 THEN
           OPEN OUTPUT frestaurants
          END-IF
          CLOSE frestaurants
 
-         OPEN EXTEND freservations
+         OPEN I-O freservations
          IF frs_stat = 35 THEN
           OPEN OUTPUT freservations
          END-IF
          CLOSE freservations
 
-       OPEN INPUT futilisateurs
+       OPEN I-O futilisateurs
          IF fu_stat = 35 THEN
           OPEN OUTPUT futilisateurs
          END-IF
@@ -260,7 +260,7 @@
            DISPLAY ' 3 - Client'
            DISPLAY ' 4 - Restaurant'
            DISPLAY ' 5 - Reservation'
-           DISPLAY ' 6 - Reservation'
+           DISPLAY ' 6 - Utilisateur'
            DISPLAY ' 0 - Quitter'
            DISPLAY '--------------------------'
            ACCEPT WmenuP
