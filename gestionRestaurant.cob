@@ -45,7 +45,7 @@
           ALTERNATE RECORD KEY IS frs_idrest WITH DUPLICATES
           FILE STATUS IS frs_stat.
 
-          SELECT futilisateurs ASSIGN TO "utilisateurs.dat"
+          SELECT futilisateurs ASSIGN TO "datautilisateurs.dat"
           ORGANIZATION indexed
           ACCESS MODE IS dynamic
           RECORD KEY IS fu_id
