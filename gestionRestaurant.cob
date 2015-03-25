@@ -45,6 +45,14 @@
           ALTERNATE RECORD KEY IS frs_idrest WITH DUPLICATES
           FILE STATUS IS frs_stat.
 
+          SELECT futilisateurs ASSIGN TO "utilisateurs.dat"
+          ORGANIZATION indexed
+          ACCESS MODE IS dynamic
+          RECORD KEY IS fu_id
+          ALTERNATE RECORD KEY IS fu_pseudo
+          ALTERNATE RECORD KEY IS fu_role WITH DUPLICATES
+          FILE STATUS IS fu_stat.
+
         DATA DIVISION.
          FILE SECTION.
           FD fmenus.
@@ -241,7 +249,7 @@
 
 
          PERFORM WITH TEST AFTER UNTIL WmenuP = 0
-          PERFORM WITH TEST AFTER UNTIL WmenuP>=0 AND WmenuP<=5
+          PERFORM WITH TEST AFTER UNTIL WmenuP>=0 AND WmenuP<=6
            DISPLAY '**************************'
            DISPLAY '***** MENU PRINCIPAL *****'
            DISPLAY '**************************'
@@ -251,6 +259,7 @@
            DISPLAY ' 3 - Client'
            DISPLAY ' 4 - Restaurant'
            DISPLAY ' 5 - Reservation'
+           DISPLAY ' 6 - Reservation'
            DISPLAY ' 0 - Quitter'
            DISPLAY '--------------------------'
            ACCEPT WmenuP
@@ -267,6 +276,8 @@
             PERFORM OPERATION_RESTAURANT
            WHEN 5
             PERFORM OPERATION_RESERVATION
+           WHEN 5
+            PERFORM OPERATION_UTILISATEUR
           END-EVALUATE
 
          END-PERFORM
