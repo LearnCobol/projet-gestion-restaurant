@@ -101,6 +101,13 @@
              02 frs_nomsMenus PIC X(250).
              02 frs_nbPersonnes PIC 99.
 
+          FD futilisateurs.
+           01 uTampon.
+             02 fu_id PIC 9(4).
+             02 fu_pseudo PIC A(30).
+             02 fu_mdp PIC A(20).
+             02 fu_role PIC A(10).
+
          WORKING-STORAGE SECTION.
           77 WmenuP PIC 9(2).
 
@@ -180,12 +187,17 @@
           77 Wmois PIC 9(2).
           77 Wannee PIC 9(4).
           77 WanneeAnt PIC 9(4).
-
           77 WplatsAchetes PIC 9(4).
           77 WcaMensuel PIC 9999V99.
-
           77 WplatsAchetesAnt PIC 9(4).
           77 WcaMensuelAnt PIC 9999999V99.
+
+          77 fu_stat PIC 9(2).
+          77 Wutil PIC 9(1).
+          77 Wpseudo PIC A(30).
+          77 Wmdp PIC A(20).
+          77 Wrole PIC A(10).
+
   
 
         PROCEDURE DIVISION.
@@ -220,6 +232,12 @@
           OPEN OUTPUT freservations
          END-IF
          CLOSE freservations
+
+       OPEN INPUT futilisateurs
+         IF fu_stat = 35 THEN
+          OPEN OUTPUT futilisateurs
+         END-IF
+         CLOSE futilisateurs
 
 
          PERFORM WITH TEST AFTER UNTIL WmenuP = 0
@@ -267,6 +285,9 @@
 
       ****************************************************************
        COPY menu_restaurant.
+
+      ****************************************************************
+       COPY menu_utilisateur.
 
       ****************************************************************
        COPY menu_reservation.
