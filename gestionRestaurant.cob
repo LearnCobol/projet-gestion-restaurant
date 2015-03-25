@@ -205,6 +205,7 @@
           77 Wpseudo PIC A(30).
           77 Wmdp PIC A(20).
           77 Wrole PIC A(10).
+          77 WinMenu PIC 9.
 
   
 

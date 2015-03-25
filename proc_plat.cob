@@ -135,23 +135,65 @@
         END-IF
         END-READ
        END-PERFORM
+       
+
 
        READ fplats
-       INVALID KEY DISPLAY 'Erreur lors de la saisie de lidentifiant'
+       INVALID KEY
+        DISPLAY 'Erreur lors de la saisie de lidentifiant'
        NOT INVALID KEY
-       MOVE 0 TO Wchoix
-       PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
-         DISPLAY 'Supprimer définitivement le plat ? 1/0'
-         ACCEPT Wchoix
-       END-PERFORM
-       IF Wchoix = 1 THEN
+        MOVE 0 TO Wchoix
+       
+       
+        MOVE 0 TO WinMenu
+        OPEN INPUT fmenus
+        
+        IF fp_type = 'Entrée' THEN
+         MOVE fp_nom TO fm_entree
+         READ fmenus
+          INVALID KEY
+           MOVE 1 TO WinMenu
+         END-READ
+        
+        ELSE IF fp_type = 'Plat' THEN
+         MOVE fp_nom TO fm_plat
+         READ fmenus
+          INVALID KEY
+           MOVE 1 TO WinMenu
+         END-READ
+        
+        ELSE IF fp_type = 'Dessert' THEN
+         MOVE fp_nom TO fm_dessert
+         READ fmenus
+          INVALID KEY
+           MOVE 1 TO WinMenu
+         END-READ
+        
+        END-IF
+       
+        CLOSE fmenus
+        
+        IF WinMenu = 1 THEN
+       
+         PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
+           DISPLAY 'Supprimer définitivement le plat ? 1/0'
+          ACCEPT Wchoix
+         END-PERFORM
+         
+         IF Wchoix = 1 THEN
          DELETE fplats
          INVALID KEY
-         DISPLAY 'erreur lors de la suppression'
+          DISPLAY 'erreur lors de la suppression'
          NOT INVALID KEY
-         DISPLAY 'le plat a été supprimé avec succès'
-       ELSE
-         DISPLAY 'Le plat na pas été supprimé'
+          DISPLAY 'le plat a été supprimé avec succès'
+         ELSE
+          DISPLAY 'Le plat na pas été supprimé'
+         END-IF
+        
+        
+        ELSE
+         DISPLAY 'Le plat est utilisé dans un menu. '
+     -         'Veuillez supprimer le menu avant de supprimer le plat'
        END-IF
        END-READ
        CLOSE fplats.
