@@ -6,7 +6,7 @@
          INPUT-OUTPUT SECTION.
           FILE-CONTROL.
 
-          SELECT fmenus ASSIGN TO "menus.dat"
+          SELECT fmenus ASSIGN TO "datamenus.dat"
           ORGANIZATION indexed
           ACCESS MODE IS dynamic
           RECORD KEY IS fm_nom
@@ -15,14 +15,14 @@
           ALTERNATE RECORD KEY IS fm_dessert WITH DUPLICATES
           FILE STATUS IS fm_stat.
 
-          SELECT fplats ASSIGN TO "plats.dat"
+          SELECT fplats ASSIGN TO "dataplats.dat"
           ORGANIZATION indexed
           ACCESS MODE IS dynamic
           RECORD KEY IS fp_nom
           ALTERNATE RECORD KEY IS fp_type WITH DUPLICATES
           FILE STATUS IS fp_stat.
 
-          SELECT fclients ASSIGN TO "clients.dat"
+          SELECT fclients ASSIGN TO "dataclients.dat"
           ORGANIZATION indexed
           ACCESS dynamic
           RECORD KEY IS fc_id
@@ -30,14 +30,14 @@
           ALTERNATE RECORD KEY IS fc_nom WITH DUPLICATES
           FILE STATUS IS fc_stat.
 
-          SELECT frestaurants ASSIGN TO "restaurants.dat"
+          SELECT frestaurants ASSIGN TO "datarestaurants.dat"
           ORGANIZATION indexed
           ACCESS dynamic
           RECORD KEY IS fr_id
           ALTERNATE RECORD KEY IS fr_ville WITH DUPLICATES
           FILE STATUS IS fr_stat.
 
-          SELECT freservations ASSIGN TO "reservations.dat"
+          SELECT freservations ASSIGN TO "datareservations.dat"
           ORGANIZATION indexed
           ACCESS dynamic
           RECORD KEY IS frs_id
