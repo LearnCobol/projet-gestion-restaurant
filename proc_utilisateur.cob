@@ -1,3 +1,8 @@
+      *************************************************************
+      *RECHERCHER_ID_UTILISATEUR
+      *Permet de retourner l'ID suivant le dernier (ou ID libre)
+      *pour sont affectation à l'ajout d'utilisateur
+      *************************************************************
        RECHERCHER_ID_UTILISATEUR.
        OPEN INPUT futilisateurs
        IF fu_stat = 41 THEN
@@ -22,14 +27,18 @@
 
 
 
-
+      *************************************************************
+      *AJOUTER_UTILISATEUR
+      *Ajoute un utilisateur avec un role (Directeur ou gérant)
+      *Si un pseudonyme est déjà utilisé, le signal
+      *************************************************************
        AJOUTER_UTILISATEUR.
        OPEN I-O futilisateurs
-       DISPLAY '=============================='
-       DISPLAY '======== AJOUT       ========='
-       DISPLAY '======== D UN        ========='
-       DISPLAY '======== UTILISATEUR ========='
-       DISPLAY '=============================='
+       DISPLAY '================================'
+       DISPLAY '========= AJOUT       =========='
+       DISPLAY '========= D UN        =========='
+       DISPLAY '========= UTILISATEUR =========='
+       DISPLAY '================================'
 
        MOVE 1 TO Wrep
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
@@ -67,11 +76,21 @@
        CLOSE futilisateurs.
 
 
-
+      *************************************************************
+      *MODIFIER_UTILISATEUR
+      *Permet la modification d'un utilisateur
+      *Demande un pseudonyme d'utilisateur, retourne ses informations
+      *Prend en compte seulement les champs modifiés et les réécrit
+      *************************************************************
        MODIFIER_UTILISATEUR.
 
        OPEN I-O futilisateurs
        MOVE 0 TO Wfin
+       DISPLAY '================================'
+       DISPLAY '======== MODIFICATION  ========='
+       DISPLAY '======== D UN          ========='
+       DISPLAY '======== UTILISATEUR   ========='
+       DISPLAY '================================'
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
        DISPLAY 'Donnez le pseudo de l''utilisateur :'
        ACCEPT Wpseudo
@@ -85,7 +104,7 @@
         AT END MOVE 1 TO Wfin
         NOT AT END
         IF Wpseudo = fu_pseudo THEN
-         DISPLAY '=============================='
+         DISPLAY '================================'
          DISPLAY 'ID : ', fu_id
          DISPLAY 'Pseudo : ',fu_pseudo
          DISPLAY 'Mdp : ',fu_mdp
@@ -137,14 +156,24 @@
          END-PERFORM
          END-PERFORM
        CLOSE futilisateurs
-       DISPLAY '=============================='.
+       DISPLAY '================================'.
 
 
-
+      *************************************************************
+      *SUPPRIMER_UTILISATEUR
+      *Permet la suppression d'un utilisateur
+      *Demande un pseudonyme d'utilisateur, retourne ses informations
+      *Demande confirmation et supprime l'utilisateur du fichier
+      *************************************************************
        SUPPRIMER_UTILISATEUR.
 
        OPEN I-O futilisateurs
        MOVE 0 TO Wfin
+       DISPLAY '================================'
+       DISPLAY '======== SUPPRESSION   ========='
+       DISPLAY '======== D UN          ========='
+       DISPLAY '======== UTILISATEUR   ========='
+       DISPLAY '================================'
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
        DISPLAY 'Donnez le pseudo de l''utilisateur :'
        ACCEPT Wpseudo
@@ -158,7 +187,7 @@
         AT END MOVE 1 TO Wfin
         NOT AT END
         IF Wpseudo = fu_pseudo THEN
-         DISPLAY '=============================='
+         DISPLAY '================================'
          DISPLAY 'ID : ', fu_id
          DISPLAY 'Pseudo : ',fu_pseudo
          DISPLAY 'Mdp : ',fu_mdp
@@ -193,10 +222,23 @@
        CLOSE futilisateurs.
 
 
+      *************************************************************
+      *CONSULTER_UTILISATEUR_ROLE
+      *Permet la consultation de tous les utilisateurs ayant le même role
+      *Demande de choisir entre les deux role
+      *Lit le fichier par la clé secondaire fu_role
+      *Affiche tous les utilisateurs (et leurs infos)
+      *************************************************************
        CONSULTER_UTILISATEUR_ROLE.
 
        OPEN INPUT futilisateurs
        MOVE 0 TO Wfin
+       DISPLAY '================================'
+       DISPLAY '======== CONSULTATION  ========='
+       DISPLAY '======== DES           ========='
+       DISPLAY '======== UTILISATEURS  ========='
+       DISPLAY '======== PAR ROLE      ========='
+       DISPLAY '================================'
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
        DISPLAY 'Choisir le role'
 
@@ -225,7 +267,7 @@
         NOT AT END
         IF Wrole = fu_role THEN
          DISPLAY 'Tous les ',fu_role
-         DISPLAY '=============================='
+         DISPLAY '================================'
          DISPLAY 'ID : ', fu_id
          DISPLAY 'Pseudo : ',fu_pseudo
          DISPLAY 'Mdp : ',fu_mdp
@@ -240,13 +282,22 @@
        END-PERFORM
 
        CLOSE futilisateurs
-          DISPLAY '=============================='.
+          DISPLAY '================================'.
 
 
-
+      *************************************************************
+      *CONSULTER_UTILISATEUR_ROLE
+      *Permet la consultation de tous les utilisateurs
+      *Lit le fichier et affiche tous les utilisateurs
+      *************************************************************
        CONSULTER_UTILISATEUR_TOUT.
 
        OPEN INPUT futilisateurs
+       DISPLAY '================================'
+       DISPLAY '======== CONSULTATION  ========='
+       DISPLAY '======== DE TOUS LES   ========='
+       DISPLAY '======== UTILISATEURS  ========='
+       DISPLAY '================================'
 
           DISPLAY 'Tous les utilisateurs'
 
@@ -256,7 +307,7 @@
            AT END
             MOVE 1 TO Wfin
            NOT AT END
-       DISPLAY '=============================='
+         DISPLAY '================================'
          DISPLAY 'ID : ', fu_id
          DISPLAY 'Pseudo : ',fu_pseudo
          DISPLAY 'Mdp : ',fu_mdp
@@ -264,4 +315,4 @@
           END-PERFORM
           CLOSE futilisateurs
 
-          DISPLAY '=============================='.
+          DISPLAY '================================'.
