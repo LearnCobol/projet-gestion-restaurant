@@ -1,15 +1,17 @@
          OPERATION_RESERVATION.
  
-       PERFORM WITH TEST AFTER UNTIL WrepChoix = 0
+       PERFORM WITH TEST AFTER UNTIL Wmenu = 0
+        PERFORM WITH TEST AFTER UNTIL Wmenu = 0 AND Wmenu<=6
          DISPLAY 'Que souhaitez vous faire ?'
          DISPLAY ' 1 - Ajouter une réservation'
-         DISPLAY ' 2 - modifier une réservation'
-         DISPLAY ' 3 - saisir les commande des clients'
-         DISPLAY ' 4 - consulter une réservation'
+         DISPLAY ' 2 - Modifier une réservation'
+         DISPLAY ' 3 - Saisir les commande des clients'
+         DISPLAY ' 4 - Consulter une réservation'
          DISPLAY ' 5 - Consulter les statistiques de ventes'
          DISPLAY ' 6 - Supprimer une réservation'
-         ACCEPT Wchoix
-         EVALUATE Wchoix
+         DISPLAY ' 0 - Quitter'
+         ACCEPT Wmenu
+         EVALUATE Wmenu
            WHEN 1
              PERFORM AJOUTER_RESA
            WHEN 2
@@ -22,12 +24,8 @@
              PERFORM STATISTIQUES_RESTAURANT
            WHEN 6
              PERFORM SUPPRIMER_RESERVATION
-           
          END-EVALUATE
-         PERFORM WITH TEST AFTER UNTIL WrepChoix = 0 OR WrepChoix = 1
-           DISPLAY 'Souhaitez vous faire autre chose ? 1:oui, 0:non'
-           ACCEPT WrepChoix
-         END-PERFORM
+        END-PERFORM
        END-PERFORM.
 
 

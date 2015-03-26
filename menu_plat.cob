@@ -1,9 +1,8 @@
          OPERATION_PLAT.
 
-         MOVE 1 TO Wplat
 
-         PERFORM WITH TEST AFTER UNTIL Wplat = 0
-          PERFORM WITH TEST AFTER UNTIL Wplat>=0 AND Wplat<=6
+         PERFORM WITH TEST AFTER UNTIL Wmenu = 0
+          PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=6
            DISPLAY 'Que souhaitez vous faire ?'
            DISPLAY ' 1 - Ajouter un plat'
            DISPLAY ' 2 - Modifier un plat'
@@ -12,10 +11,10 @@
            DISPLAY ' 5 - Consulter les plats pour un type'        
            DISPLAY ' 6 - Consulter tous les plats'
            DISPLAY ' 0 - Quitter'
-           ACCEPT Wplat
+           ACCEPT Wmenu
           END-PERFORM
 
-          EVALUATE Wplat
+          EVALUATE Wmenu
            WHEN 1
             PERFORM AJOUTER_PLAT
            WHEN 2
@@ -27,6 +26,32 @@
            WHEN 5
             PERFORM CONSULTER_PLAT_TYPE
            WHEN 6
+            PERFORM CONSULTER_PLAT_TOUT
+          END-EVALUATE
+
+         END-PERFORM.
+
+
+      ****************************************************************
+         OPERATION_PLAT_UTIL.
+
+
+         PERFORM WITH TEST AFTER UNTIL Wmenu = 0
+          PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=3
+           DISPLAY 'Que souhaitez vous faire ?'
+           DISPLAY ' 1 - Consulter les plats pour un budget'
+           DISPLAY ' 2 - Consulter les plats pour un type'        
+           DISPLAY ' 3 - Consulter tous les plats'
+           DISPLAY ' 0 - Quitter'
+           ACCEPT Wmenu
+          END-PERFORM
+
+          EVALUATE Wmenu
+           WHEN 1 
+            PERFORM CONSULTER_PLAT_BUDGET
+           WHEN 2
+            PERFORM CONSULTER_PLAT_TYPE
+           WHEN 3
             PERFORM CONSULTER_PLAT_TOUT
           END-EVALUATE
 

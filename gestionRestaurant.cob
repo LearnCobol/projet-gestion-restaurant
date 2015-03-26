@@ -118,6 +118,7 @@
 
          WORKING-STORAGE SECTION.
           77 WmenuP PIC 9(2).
+          77 WmenuD PIC 9(2).
 
           77 fm_stat PIC 9(2).
           77 Wmenu PIC 9(1).
@@ -125,14 +126,15 @@
           77 WprixCarte PIC 999V99.
           77 Wbudget PIC 999V99.
           77 WnomMenu PIC A(50).
+          77 Wtrouve PIC 9(1).
 
           77 fp_stat PIC 9(2).
           77 Wplat PIC 9(1).
-          77 WnomP PIC A(50).
           77 WtypeP PIC A(7).
           77 Wchoix PIC 9.
           77 Wrep PIC 9.
           77 Wid PIC 9(1).
+          77 WnomP PIC A(50).
           77 WprixP PIC 999V99.
 
           77 fc_stat PIC 99.
@@ -249,11 +251,114 @@
          CLOSE futilisateurs
 
 
-         PERFORM WITH TEST AFTER UNTIL WmenuP = 0
-          PERFORM WITH TEST AFTER UNTIL WmenuP>=0 AND WmenuP<=6
-           DISPLAY '**************************'
-           DISPLAY '***** MENU PRINCIPAL *****'
-           DISPLAY '**************************'
+
+       PERFORM WITH TEST AFTER UNTIL WmenuP = 0
+        PERFORM WITH TEST AFTER UNTIL WmenuP>=0 AND WmenuP<=2
+         DISPLAY '*******************************'
+         DISPLAY '*********** ACCUEIL ***********'
+         DISPLAY '*******************************'
+         DISPLAY 'Connexion ?'
+         DISPLAY ' 1 - Oui (Gérant, Directeur)'
+         DISPLAY ' 2 - Non (Utilisateur)'
+         DISPLAY ' 0 - Quitter'
+         ACCEPT WmenuP
+        END-PERFORM
+
+        EVALUATE WmenuP
+         WHEN 1
+          PERFORM CONNEXION
+         WHEN 2
+          PERFORM MENU_PRINCIPAL_UTIL
+        END-EVALUATE
+       END-PERFORM
+
+
+         CLOSE futilisateurs
+         STOP RUN.
+
+
+       CONNEXION.
+       PERFORM WITH TEST AFTER UNTIL Wrep = 0
+        DISPLAY '*********************************'
+        DISPLAY '*********** CONNEXION ***********'
+        DISPLAY '*********************************'
+
+        DISPLAY 'PSEUDO : '
+        ACCEPT Wpseudo
+        OPEN INPUT futilisateurs
+
+        MOVE Wpseudo TO fu_pseudo
+        START futilisateurs, KEY IS = fu_pseudo
+
+        INVALID KEY 
+         DISPLAY 'Aucun utilisateur n''a ce pseudo'
+        NOT INVALID KEY
+         PERFORM WITH TEST AFTER UNTIL Wfin = 1
+          READ futilisateurs NEXT
+          AT END MOVE 1 TO Wfin
+          NOT AT END
+           IF Wpseudo = fu_pseudo THEN
+            DISPLAY '=============================='
+            DISPLAY 'MDP : '
+            ACCEPT Wmdp
+            IF Wmdp = fu_mdp THEN
+             MOVE fu_role TO Wrole
+             IF Wrole = 'Directeur' THEN
+              DISPLAY 'Connexion réussi en tant que Directeur'
+              PERFORM MENU_PRINCIPAL_DIR
+             ELSE IF Wrole = 'Gérant' THEN
+               DISPLAY 'Connexion réussi en tant que Gérant'
+               PERFORM MENU_PRINCIPAL_GER
+              END-IF
+             END-IF
+            END-IF             
+           END-IF
+          END-READ
+         END-PERFORM
+       
+         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
+         DISPLAY 'Souhaitez vous changer d''utilisateur ? 1:oui, 0:non'
+         ACCEPT Wrep
+         END-PERFORM
+         END-PERFORM.
+
+
+
+       MENU_PRINCIPAL_UTIL.
+
+         PERFORM WITH TEST AFTER UNTIL WmenuD = 0
+          PERFORM WITH TEST AFTER UNTIL WmenuD>=0 AND WmenuD<=3
+           DISPLAY '************************************'
+           DISPLAY '**** MENU PRINCIPAL UTILISATEUR ****'
+           DISPLAY '************************************'
+           DISPLAY 'Que souhaitez vous faire ?'
+           DISPLAY ' 1 - Menu'
+           DISPLAY ' 2 - Plat'
+           DISPLAY ' 3 - Restaurant'
+           DISPLAY ' 0 - Quitter'
+           DISPLAY '************************************'
+           ACCEPT WmenuD
+          END-PERFORM
+
+          EVALUATE WmenuD
+           WHEN 1
+            PERFORM OPERATION_MENU_UTIL
+           WHEN 2
+            PERFORM OPERATION_PLAT_UTIL
+           WHEN 3 
+            PERFORM OPERATION_RESTAURANT_UTIL
+          END-EVALUATE
+
+         END-PERFORM.
+
+
+       MENU_PRINCIPAL_DIR.
+
+         PERFORM WITH TEST AFTER UNTIL WmenuD = 0
+          PERFORM WITH TEST AFTER UNTIL WmenuD>=0 AND WmenuD<=6
+           DISPLAY '************************************'
+           DISPLAY '***** MENU PRINCIPAL DIRECTEUR *****'
+           DISPLAY '************************************'
            DISPLAY 'Que souhaitez vous faire ?'
            DISPLAY ' 1 - Menu'
            DISPLAY ' 2 - Plat'
@@ -262,11 +367,11 @@
            DISPLAY ' 5 - Reservation'
            DISPLAY ' 6 - Utilisateur'
            DISPLAY ' 0 - Quitter'
-           DISPLAY '--------------------------'
-           ACCEPT WmenuP
+           DISPLAY '************************************'
+           ACCEPT WmenuD
           END-PERFORM
 
-          EVALUATE WmenuP
+          EVALUATE WmenuD
            WHEN 1
             PERFORM OPERATION_MENU
            WHEN 2
@@ -281,9 +386,36 @@
             PERFORM OPERATION_UTILISATEUR
           END-EVALUATE
 
-         END-PERFORM
+         END-PERFORM.
 
-         STOP RUN.
+
+
+       MENU_PRINCIPAL_GER.
+
+         PERFORM WITH TEST AFTER UNTIL WmenuD = 0
+          PERFORM WITH TEST AFTER UNTIL WmenuD>=0 AND WmenuD<=2
+           DISPLAY '************************************'
+           DISPLAY '****** MENU PRINCIPAL GERANT *******'
+           DISPLAY '************************************'
+           DISPLAY 'Que souhaitez vous faire ?'
+           DISPLAY ' 1 - Client'
+           DISPLAY ' 2 - Reservation'
+           DISPLAY ' 0 - Quitter'
+           DISPLAY '************************************'
+           ACCEPT WmenuD
+          END-PERFORM
+
+          EVALUATE WmenuD
+           WHEN 1
+            PERFORM OPERATION_CLIENT
+           WHEN 2 
+            PERFORM OPERATION_RESERVATION
+          END-EVALUATE
+
+         END-PERFORM.
+
+
+
 
 
       ****************************************************************
