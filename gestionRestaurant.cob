@@ -253,14 +253,16 @@
 
 
        PERFORM WITH TEST AFTER UNTIL WmenuP = 0
-        PERFORM WITH TEST AFTER UNTIL WmenuP>=0 AND WmenuP<=2
+        PERFORM WITH TEST AFTER UNTIL WmenuP>=0 AND WmenuP<=3
          DISPLAY '*******************************'
          DISPLAY '*********** ACCUEIL ***********'
          DISPLAY '*******************************'
          DISPLAY 'Connexion ?'
          DISPLAY ' 1 - Oui (Gérant, Directeur)'
          DISPLAY ' 2 - Non (Utilisateur)'
+         DISPLAY ' 3 - Admin (demo)'
          DISPLAY ' 0 - Quitter'
+         DISPLAY '*******************************'
          ACCEPT WmenuP
         END-PERFORM
 
@@ -269,6 +271,8 @@
           PERFORM CONNEXION
          WHEN 2
           PERFORM MENU_PRINCIPAL_UTIL
+         WHEN 3
+          PERFORM MENU_PRINCIPAL_DIR
         END-EVALUATE
        END-PERFORM
 
@@ -289,16 +293,15 @@
 
         MOVE Wpseudo TO fu_pseudo
         START futilisateurs, KEY IS = fu_pseudo
-
         INVALID KEY 
          DISPLAY 'Aucun utilisateur n''a ce pseudo'
         NOT INVALID KEY
          PERFORM WITH TEST AFTER UNTIL Wfin = 1
           READ futilisateurs NEXT
-          AT END MOVE 1 TO Wfin
-          NOT AT END
+           AT END MOVE 1 TO Wfin
+           NOT AT END
            IF Wpseudo = fu_pseudo THEN
-            DISPLAY '=============================='
+            DISPLAY '---------------------------------'
             DISPLAY 'MDP : '
             ACCEPT Wmdp
             IF Wmdp = fu_mdp THEN
@@ -311,14 +314,11 @@
                PERFORM MENU_PRINCIPAL_GER
               END-IF
              END-IF
+             ELSE
+               DISPLAY 'Mot de passe erroné'
             END-IF             
            END-IF
           END-READ
-         END-PERFORM
-       
-         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-         DISPLAY 'Souhaitez vous changer d''utilisateur ? 1:oui, 0:non'
-         ACCEPT Wrep
          END-PERFORM
          END-PERFORM.
 
