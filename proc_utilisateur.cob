@@ -286,7 +286,7 @@
 
 
       *************************************************************
-      *CONSULTER_UTILISATEUR_ROLE
+      *CONSULTER_UTILISATEUR_TOUT
       *Permet la consultation de tous les utilisateurs
       *Lit le fichier et affiche tous les utilisateurs
       *************************************************************
