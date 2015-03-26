@@ -23,58 +23,48 @@
 
 
 
-         AJOUTER_UTILISATEUR.
-         OPEN I-O futilisateurs
-         IF fu_stat = 35 THEN
-         OPEN OUTPUT futilisateurs
-         END-IF
+       AJOUTER_UTILISATEUR.
+       OPEN I-O futilisateurs
+       DISPLAY '=============================='
+       DISPLAY '======== AJOUT       ========='
+       DISPLAY '======== D UN        ========='
+       DISPLAY '======== UTILISATEUR ========='
+       DISPLAY '=============================='
 
-          DISPLAY '=============================='
-          DISPLAY '======== AJOUT       ========='
-          DISPLAY '======== D UN        ========='
-          DISPLAY '======== UTILISATEUR ========='
-          DISPLAY '=============================='
-
-         PERFORM WITH TEST AFTER UNTIL Wrep = 0
-          DISPLAY 'Donnez les informations de l''utilisateur'
-
-          DISPLAY 'Pseudo de l''utilisateur: '
-         ACCEPT Wpseudo
-       MOVE Wpseudo TO fu_pseudo
-       START futilisateurs, KEY IS = fu_pseudo
-       INVALID KEY 
-          DISPLAY 'Mot de passe de l''utilisateur: ',fu_pseudo
-         ACCEPT fu_mdp       
-        
-          PERFORM WITH TEST AFTER UNTIL Wutil>=1 AND Wutil<=2
-           DISPLAY 'Role de l''utilisateur ?'
-           DISPLAY ' 1 - Gérant'
-           DISPLAY ' 2 - Directeur'
-           ACCEPT Wutil
-          END-PERFORM
-
-          EVALUATE Wutil
-           WHEN 1
-            MOVE 'Gérant' TO fu_role
-           WHEN 2
-            MOVE 'Directeur' TO fu_role
-          END-EVALUATE
-
-         PERFORM RECHERCHER_ID_UTILISATEUR
-         MOVE Wid TO fu_id  
-
+       MOVE 1 TO Wrep
+       PERFORM WITH TEST AFTER UNTIL Wrep = 0
+        PERFORM RECHERCHER_ID_UTILISATEUR
+        MOVE Wid TO fu_id
+        DISPLAY 'Donnez les informations de l''utilisateur'
+        DISPLAY 'Pseudo de l''utilisateur: '
+        ACCEPT Wpseudo
+        MOVE Wpseudo TO fu_pseudo
+        START futilisateurs, KEY IS = fu_pseudo
+        INVALID KEY
+         DISPLAY 'Mot de passe de l''utilisateur: ',fu_pseudo
+         ACCEPT fu_mdp
+         PERFORM WITH TEST AFTER UNTIL Wutil>=1 AND Wutil<=2
+          DISPLAY 'Role de l''utilisateur ?'
+          DISPLAY ' 1 - Gérant'
+          DISPLAY ' 2 - Directeur'
+          ACCEPT Wutil
+         END-PERFORM
+         EVALUATE Wutil
+          WHEN 1
+           MOVE 'Gérant' TO fu_role
+          WHEN 2
+           MOVE 'Directeur' TO fu_role
+         END-EVALUATE
          WRITE uTampon
-
          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
           DISPLAY 'Souhaitez vous continuer? 0 : non, 1 : oui'
-         ACCEPT Wrep
+          ACCEPT Wrep
          END-PERFORM
-
-       NOT INVALID KEY
-       DISPLAY 'Pseudo déjà utilisé'
-          DISPLAY '=============================='
-         END-PERFORM
-         CLOSE futilisateurs.
+        NOT INVALID KEY
+         DISPLAY 'Pseudo déjà utilisé'
+         DISPLAY '=============================='
+       END-PERFORM
+       CLOSE futilisateurs.
 
 
 
@@ -147,7 +137,7 @@
          END-PERFORM
          END-PERFORM
        CLOSE futilisateurs
-          DISPLAY '=============================='.
+       DISPLAY '=============================='.
 
 
 
