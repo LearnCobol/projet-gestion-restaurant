@@ -1,9 +1,6 @@
        RECHERCHER_NUM_RESTAURANT.
-       OPEN INPUT frestaurants
-       IF fr_stat = 41 THEN
-         CLOSE frestaurants
-         OPEN I-O frestaurants 
-       END-IF
+       CLOSE frestaurants
+       OPEN I-O frestaurants 
        MOVE 0 TO Wnum
        MOVE 0 TO Wfin
        PERFORM WITH TEST AFTER UNTIL Wfin = 1
@@ -21,6 +18,7 @@
        END-PERFORM.
 	  
        AJOUTER_RESTAURANT.
+       OPEN I-O frestaurants
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         DISPLAY 'Donnez les informations sur le nouveau restaurant'
         PERFORM RECHERCHER_NUM_RESTAURANT
@@ -64,7 +62,8 @@
           ACCEPT Wrep
         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
         END-PERFORM
-        END-PERFORM.
+        END-PERFORM
+        CLOSE frestaurants.
 		
        CONSULTER_RESTAURANT.
 	   
