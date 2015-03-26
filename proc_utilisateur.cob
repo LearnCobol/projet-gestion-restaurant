@@ -38,15 +38,13 @@
          PERFORM WITH TEST AFTER UNTIL Wrep = 0
           DISPLAY 'Donnez les informations de l''utilisateur'
 
-         PERFORM RECHERCHER_ID_UTILISATEUR
-         MOVE Wid TO fu_id
-
           DISPLAY 'Pseudo de l''utilisateur: '
-         ACCEPT fu_pseudo
+         ACCEPT Wpseudo
+       MOVE Wpseudo TO fu_pseudo
+       START futilisateurs, KEY IS = fu_pseudo
+       INVALID KEY 
           DISPLAY 'Mot de passe de l''utilisateur: ',fu_pseudo
-         ACCEPT fu_mdp
-         
-         
+         ACCEPT fu_mdp       
         
           PERFORM WITH TEST AFTER UNTIL Wutil>=1 AND Wutil<=2
            DISPLAY 'Role de l''utilisateur ?'
@@ -62,12 +60,19 @@
             MOVE 'Directeur' TO fu_role
           END-EVALUATE
 
+         PERFORM RECHERCHER_ID_UTILISATEUR
+         MOVE Wid TO fu_id  
+
          WRITE uTampon
 
          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
           DISPLAY 'Souhaitez vous continuer? 0 : non, 1 : oui'
          ACCEPT Wrep
          END-PERFORM
+
+       NOT INVALID KEY
+       DISPLAY 'Pseudo déjà utilisé'
+          DISPLAY '=============================='
          END-PERFORM
          CLOSE futilisateurs.
 
