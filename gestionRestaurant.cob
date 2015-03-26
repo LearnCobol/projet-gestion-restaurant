@@ -1,3 +1,9 @@
+      *************************************************************
+      *Programme principal de l'application gestionRestaurant
+      *Contient les création de fichier et leurs définitions
+      *Contient les variables de travail
+      *Contient les menus principaux et la gestion de connexion
+      *************************************************************
        IDENTIFICATION DIVISION.
          PROGRAM-ID. gestionRestaurant.
 
@@ -251,7 +257,11 @@
          CLOSE futilisateurs
 
 
-
+      *************************************************************
+      *L'accueil
+      *Demande le status de l'utilisateur
+      *Réoriente sur les autres menus principaux (dont connexion)
+      *************************************************************
        PERFORM WITH TEST AFTER UNTIL WmenuP = 0
         PERFORM WITH TEST AFTER UNTIL WmenuP>=0 AND WmenuP<=3
          DISPLAY '*******************************'
@@ -259,7 +269,9 @@
          DISPLAY '*******************************'
          DISPLAY 'Connexion ?'
          DISPLAY ' 1 - Oui (Gérant, Directeur)'
-         DISPLAY ' 2 - Non (Utilisateur)'
+         DISPLAY ' 2 - Non (Utilisateur anonyme)'
+      *Pour un souci de rapiditer des tests et de démonstration de l'application
+      *on propose ici un accès administrateur sans limite ni condition
          DISPLAY ' 3 - Admin (demo)'
          DISPLAY ' 0 - Quitter'
          DISPLAY '*******************************'
@@ -271,6 +283,8 @@
           PERFORM CONNEXION
          WHEN 2
           PERFORM MENU_PRINCIPAL_UTIL
+      *L'accès administrateur redirige directement sans connexion sur 
+      *le menu des directeurs possédant tous les droits et accès
          WHEN 3
           PERFORM MENU_PRINCIPAL_DIR
         END-EVALUATE
@@ -280,7 +294,13 @@
          CLOSE futilisateurs
          STOP RUN.
 
-
+      *************************************************************
+      *CONNEXION
+      *Menu principal de connexion
+      *Demande les informations de connexion de du gérant ou du directeur
+      *se connectant. Après vérification (pseudo puis si pseudo OK, mdp)
+      *renvoit sur le menu principal correspondant au role du connecté.
+      *************************************************************
        CONNEXION.
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         DISPLAY '*********************************'
@@ -323,7 +343,11 @@
          END-PERFORM.
 
 
-
+      *************************************************************
+      *MENU_PRINCIPAL_UTIL
+      *Menu principal des utilisateurs anonyme accéssible sans connexion
+      *Restraint leurs accès à leurs sous-menus spécifiques
+      *************************************************************
        MENU_PRINCIPAL_UTIL.
 
          PERFORM WITH TEST AFTER UNTIL WmenuD = 0
@@ -352,6 +376,13 @@
          END-PERFORM.
 
 
+      *************************************************************
+      *MENU_PRINCIPAL_DIR
+      *Menu principal des directeurs accessible par les directeurs connectés
+      *Donne accès à l'ensembles des fonctions de l'application
+      *(c'est a ce menu que l'on donne accès au role administrateur
+      *créé spécialement pour les tests et la démonstration)
+      *************************************************************
        MENU_PRINCIPAL_DIR.
          PERFORM WITH TEST AFTER UNTIL WmenuD = 0
           PERFORM WITH TEST AFTER UNTIL WmenuD>=0 AND WmenuD<=6
@@ -388,7 +419,13 @@
          END-PERFORM.
 
 
-
+      *************************************************************
+      *MENU_PRINCIPAL_GER
+      *Menu principal des gérants accessible par les gérants connectés
+      *Donne accès aux fonctions définis des gérants de restaurant
+      *Un gérant à pour charge les clients et les reservations dans leurs
+      *globalité
+      *************************************************************
        MENU_PRINCIPAL_GER.
 
          PERFORM WITH TEST AFTER UNTIL WmenuD = 0
@@ -414,8 +451,7 @@
          END-PERFORM.
 
 
-
-
+      *Ici on appel grâce à COPY les sous-menus de l'application
 
       ****************************************************************
        COPY menu_menu.
