@@ -77,7 +77,7 @@
           END-READ
          END-PERFORM
          DISPLAY 'Donnez lidentifiant du restaurant concerné:'
-         ACCEPT fc_id
+         ACCEPT fr_id
          READ frestaurants
          INVALID KEY DISPLAY 'Erreur lors de la saisie de lidentifiant'
          NOT INVALID KEY
@@ -196,7 +196,6 @@
             END-IF
             MOVE 0 TO Wlibre
            ELSE
-            SUBTRACT WplacesOccupees FROM WplacesLibres
             DISPLAY 'Erreur, Il ne reste que ',WPlacesLibres,
      - ' places pour cette heure'
              DISPLAY 'Souhaiter vous venir moins nombreux dans ',
@@ -269,9 +268,7 @@
           PERFORM WITH TEST AFTER UNTIL Wfin = 1
             READ freservations NEXT
               AT END MOVE 1 TO Wfin
-              NOT AT END                
-               DISPLAY Wdate
-               DISPLAY frs_date
+              NOT AT END 
                IF frs_date_annee >= Wdate_annee THEN
                  IF frs_date_mois > Wdate_mois THEN
                  PERFORM AFFICHER_RESA
@@ -292,7 +289,9 @@
                 READ freservations NEXT
                 AT END MOVE 1 TO Wfin       
                 NOT AT END 
-                  PERFORM AFFICHER_RESA
+                  IF frs_idCli = WidCliSauv THEN
+                    PERFORM AFFICHER_RESA
+                  END-IF
               END-PERFORM
          WHEN 3
            PERFORM RECHERCHER_RESTAURANT
@@ -303,8 +302,10 @@
               PERFORM WITH TEST AFTER UNTIL Wfin = 1
                 READ freservations NEXT
                 AT END MOVE 1 TO Wfin       
-                NOT AT END 
-                  PERFORM AFFICHER_RESA
+                NOT AT END
+                  IF frs_idrest = WidRestSauv THEN 
+                    PERFORM AFFICHER_RESA
+                  END-IF
               END-PERFORM          
        END-EVALUATE
        CLOSE freservations.
@@ -389,7 +390,7 @@
        END-PERFORM
        DISPLAY 'Remplissez les informations souhaitées'
        MOVE frs_id TO WidSauv
-       MOVE frs_idRest TO WidRestSauv
+       MOVE frs_idrest TO WidRestSauv
        MOVE frs_idCli TO WidCliSauv
        PERFORM WITH TEST AFTER UNTIL Wlibre = 1
          DISPLAY 'Veuillez saisir la date de la réservation:'
@@ -484,6 +485,8 @@
                 MOVE WnbPersonnes TO frs_nbPersonnes 
              END-IF
              REWRITE resaTampon
+             IF frs_stat = 0 THEN
+              DISPLAY 'Les modifications ont été enregistrées'
              MOVE 0 TO Wlibre
            ELSE
             SUBTRACT WplacesOccupees FROM WplacesLibres
@@ -505,7 +508,6 @@
         ACCEPT fr_ville
 		
         MOVE fr_ville to WvilleRst
-		
         START frestaurants , KEY IS = fr_ville
          INVALID KEY
           DISPLAY 'Aucun restaurant n''est présent dans cette ville'
@@ -525,9 +527,10 @@
            END-PERFORM
           END-START
         
-        PERFORM WITH TEST AFTER UNTIL WidRestSauv >= 1 
+         
+       IF WnbChoix > 0 THEN
+        PERFORM WITH TEST AFTER UNTIL WidRestSauv >= 1
      -  AND WidRestSauv <= WnbChoix
-
         DISPLAY '==='
         DISPLAY 'Quel restaurant afficher ?'
         ACCEPT WidRestSauv
@@ -549,7 +552,7 @@
         MOVE 0 TO WcaMensuel
         MOVE 0 TO WplatsAchetesAnt
         MOVE 0 TO WcaMensuelAnt
-        MOVE WidRestSauv TO frs_idRest
+        MOVE WidRestSauv TO frs_idrest
         OPEN INPUT freservations
         START freservations , KEY IS = frs_idrest
          INVALID KEY
@@ -587,7 +590,7 @@
      -         '(année précédente : ',WcaMensuelAnt,')'
         DISPLAY 'Nombre de plats commandés : ',WplatsAchetes,
      -         '(année précédente : ',WplatsAchetesAnt,')'
-      
+       END-IF
 
         CLOSE freservations
         CLOSE frestaurants.
@@ -646,10 +649,18 @@
           END-PERFORM 
           CLOSE fmenus
           MOVE WresMenu TO frs_nomsMenus
+          OPEN INPUT fclients
+          MOVE frs_idCli TO fc_id
+          READ fclients
+          NOT INVALID KEY
+            MULTIPLY WprixTotal BY fc_pctReduc GIVING WpctReduc
+            SUBTRACT WpctReduc FROM WprixTotal
+          END-READ
+          CLOSE fclients
           MOVE WprixTotal TO frs_prix
           REWRITE resaTampon
          ELSE
-	       DISPLAY 'La reservation a deja ete payee'
+	       DISPLAY 'La réservation a déjà été payée'
 		   
          END-IF  
          END-READ
@@ -676,10 +687,10 @@
            INVALID KEY
             DISPLAY 'Erreur lors de la suppression'
            NOT INVALID KEY
-            DISPLAY 'Reservation supprime'
+            DISPLAY 'Réservation supprimée'
           ELSE
            DISPLAY 'Erreur lors de la suppression'
          ELSE
-          DISPLAY 'Impossible de supprimer un reservation deja payee'  
+          DISPLAY 'Impossible de supprimer un reservation déjà payée'  
          END-IF
        CLOSE freservations.
