@@ -158,12 +158,52 @@
           DISPLAY '========    D UN     ========='
           DISPLAY '========      MENU   ========='
           DISPLAY '=============================='
-
+          OPEN I-O fmenus
+          OPEN INPUT freservations
           DISPLAY ' '
           DISPLAY 'Saisir le nom du menu à supprimer :'
           ACCEPT fm_nom
           DISPLAY '==='
-
+            READ fmenus 
+            INVALID KEY
+              DISPLAY 'Aucun menu ne correspond à ce nom'
+            NOT INVALID KEY
+              MOVE 0 TO Wfin
+              MOVE 0 TO Wtrouve
+              MOVE 0 TO WnbMenus
+              PERFORM WITH TEST AFTER UNTIL Wfin = 1 OR Wtrouve = 1
+                READ freservations NEXT
+                AT END MOVE 1 TO Wfin
+                NOT AT END
+                  MOVE frs_nomsMenus TO WresMenu
+                  INSPECT WresMenu 
+     -  TALLYING WnbMenus for ALL fm_nom
+                  IF WnbMenus > 0 THEN
+                     MOVE 1 TO Wtrouve
+                  END-IF
+              END-PERFORM
+              IF Wtrouve = 1 THEN
+                DISPLAY 'Vous ne pouvez pas supprmimer un menu associé'
+     - ' à une réservation'
+              ELSE
+                MOVE 0 TO Wchoix
+                PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
+                  DISPLAY 'Souhaité vous supprimé définitivement'
+     - ' le menu'
+                  ACCEPT Wchoix    
+                END-PERFORM
+                IF Wchoix = 1  THEN
+                    DELETE fmenus
+                      INVALID KEY DISPLAY 'Le menu n''a pas été ' 
+     -  'supprimé'
+                      NOT INVALID KEY
+                       DISPLAY 'Le menu a été définitement supprimé'
+                ELSE
+                   DISPLAY 'La suppression a été annulée'  
+                END-IF
+              END-IF
+          CLOSE freservations
+          CLOSE fmenus
           DISPLAY '=============================='.
 
          CONSULTER_MENU_BUDGET.

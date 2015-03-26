@@ -35,7 +35,7 @@
             MOVE 'Dessert' TO fp_type
           END-EVALUATE
 
-          DISPLAY 'Prix du plat (0,0): '
+          DISPLAY 'Prix du plat (0.0): '
          ACCEPT fp_prix
          WRITE pTampon
 
@@ -90,7 +90,7 @@
           END-EVALUATE
 
 
-          DISPLAY 'Prix du plat (0,0): '
+          DISPLAY 'Prix du plat (0.0): '
          ACCEPT WprixP
        END-READ
        IF WnomP NOT = SPACE
@@ -115,68 +115,59 @@
 
        SUPPRIMER_PLAT.
        OPEN I-O fplats
+       
        MOVE 0 TO Wfin
        DISPLAY 'Donnez un nom de plat'
-       ACCEPT WnomP
-       MOVE WnomP TO fp_nom
-       START fplats, KEY IS = fp_nom
-       INVALID KEY 
-       DISPLAY 'Aucun plat ne porte ce nom'
-       NOT INVALID KEY
-       PERFORM WITH TEST AFTER UNTIL Wfin = 1
-        READ fplats NEXT
-        AT END MOVE 1 TO Wfin
-        NOT AT END
-        IF WnomP = fp_nom THEN
-          DISPLAY '=============================='
-         DISPLAY 'Nom : ', fp_nom
-         DISPLAY 'Type : ',fp_type
-         DISPLAY 'Prix : ',fp_prix
-        END-IF
-        END-READ
-       END-PERFORM
+       ACCEPT fp_nom
        
-
-
        READ fplats
        INVALID KEY
-        DISPLAY 'Erreur lors de la saisie de lidentifiant'
+        DISPLAY 'Aucun plat ne porte ce nom'
        NOT INVALID KEY
+       
+        DISPLAY '=============================='
+        DISPLAY 'Nom : ', fp_nom
+        DISPLAY 'Type : ',fp_type
+        DISPLAY 'Prix : ',fp_prix
+       
         MOVE 0 TO Wchoix
        
        
-        MOVE 0 TO WinMenu
+        MOVE 1 TO WinMenu
         OPEN INPUT fmenus
         
         IF fp_type = 'Entrée' THEN
          MOVE fp_nom TO fm_entree
          READ fmenus
           INVALID KEY
-           MOVE 1 TO WinMenu
+           MOVE 0 TO WinMenu
          END-READ
         
         ELSE IF fp_type = 'Plat' THEN
          MOVE fp_nom TO fm_plat
          READ fmenus
           INVALID KEY
-           MOVE 1 TO WinMenu
+           MOVE 0 TO WinMenu
          END-READ
         
         ELSE IF fp_type = 'Dessert' THEN
          MOVE fp_nom TO fm_dessert
          READ fmenus
           INVALID KEY
-           MOVE 1 TO WinMenu
+           MOVE 0 TO WinMenu
          END-READ
         
+        END-IF
+        END-IF
         END-IF
        
         CLOSE fmenus
         
-        IF WinMenu = 1 THEN
+        IF WinMenu = 0 THEN
+         DISPLAY 'à supprimer'
        
          PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
-           DISPLAY 'Supprimer définitivement le plat ? 1/0'
+           DISPLAY 'Supprimer définitivement le plat (1:oui 0:non) ?'
           ACCEPT Wchoix
          END-PERFORM
          
