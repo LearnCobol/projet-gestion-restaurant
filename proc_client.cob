@@ -220,6 +220,7 @@
 
        SUPPRIMER_CLIENT.
        OPEN I-O fclients
+       OPEN INPUT freservations
        MOVE 0 TO Wfin
        DISPLAY 'Donnez un nom de client'
        ACCEPT WnomCli
@@ -246,18 +247,25 @@
        READ fclients
        INVALID KEY DISPLAY 'Erreur lors de la saisie de lidentifiant'
        NOT INVALID KEY
-       MOVE 0 TO Wchoix
-       PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
-         DISPLAY 'Supprimer définitivement le client ? 1/0'
-         ACCEPT Wchoix
-       END-PERFORM
-       IF Wchoix = 1 THEN
-         DELETE fclients
-         INVALID KEY
-         DISPLAY 'erreur lors de la suppression'
-         NOT INVALID KEY
-         DISPLAY 'le client a été supprimé avec succès'
-       ELSE
-         DISPLAY 'Le client na pas été supprimé'
-       END-IF
-       CLOSE fclients.
+       MOVE fc_id TO frs_idCli
+       START freservations, KEY IS = frs_idCli
+       INVALID KEY
+         MOVE 0 TO Wchoix
+         PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
+           DISPLAY 'Supprimer définitivement le client ? 1/0'
+           ACCEPT Wchoix
+         END-PERFORM
+         IF Wchoix = 1 THEN
+           DELETE fclients
+           INVALID KEY
+             DISPLAY 'erreur lors de la suppression'
+           NOT INVALID KEY
+             DISPLAY 'le client a été supprimé avec succès'
+         ELSE
+           DISPLAY 'Le client na pas été supprimé'
+         END-IF
+       NOT INVALID
+          DISPLAY 'Le client ne peut pas être supprimé car il a '
+     - 'déjà effectuée une réservation'
+       CLOSE fclients
+       CLOSE freservations.
