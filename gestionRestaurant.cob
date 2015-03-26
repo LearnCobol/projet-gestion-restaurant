@@ -277,7 +277,7 @@
             PERFORM OPERATION_RESTAURANT
            WHEN 5
             PERFORM OPERATION_RESERVATION
-           WHEN 5
+           WHEN 6
             PERFORM OPERATION_UTILISATEUR
           END-EVALUATE
 

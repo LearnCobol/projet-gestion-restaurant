@@ -27,8 +27,7 @@
            DISPLAY 'Autre action ? 1:oui, 0:non'
            ACCEPT WrepChoix
          END-PERFORM
-       END-PERFORM
-       STOP RUN.
+       END-PERFORM.
 
 
       ****************************************************************

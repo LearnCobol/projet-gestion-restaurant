@@ -30,9 +30,7 @@
             PERFORM CONSULTER_PLAT_TOUT
           END-EVALUATE
 
-         END-PERFORM
-
-         STOP RUN.
+         END-PERFORM.
 
 
       ****************************************************************

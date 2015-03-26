@@ -26,9 +26,7 @@
             PERFORM CONSULTER_MENU_BUDGET
           END-EVALUATE
 
-         END-PERFORM
-
-         STOP RUN.
+         END-PERFORM.
 
 
       ****************************************************************

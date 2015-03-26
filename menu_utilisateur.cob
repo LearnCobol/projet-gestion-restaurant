@@ -30,9 +30,9 @@
            DISPLAY 'Souhaitez vous faire autre chose ? 1:oui, 0:non'
            ACCEPT Wrep
          END-PERFORM
-       END-PERFORM
+       END-PERFORM.
 
-       STOP RUN.
+
 
 
       ****************************************************************

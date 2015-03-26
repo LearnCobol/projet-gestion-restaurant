@@ -21,9 +21,7 @@
            DISPLAY 'Souhaitez vous faire autre chose ? 1:oui, 0:non'
            ACCEPT WrepChoix
          END-PERFORM
-       END-PERFORM
-
-       STOP RUN.
+       END-PERFORM.
 
 
       ****************************************************************
