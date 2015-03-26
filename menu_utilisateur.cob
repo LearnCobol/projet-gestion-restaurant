@@ -1,3 +1,8 @@
+      *************************************************************
+      *OPERATION_UTILISATEUR
+      *Menu permettant de choisir son action sur le fichier utilisateurs
+      *Accessible seulement par le role Directeur
+      *************************************************************
        OPERATION_UTILISATEUR.
 
          PERFORM WITH TEST AFTER UNTIL Wmenu = 0
