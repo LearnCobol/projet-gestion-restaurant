@@ -125,6 +125,7 @@
           77 WprixCarte PIC 999V99.
           77 Wbudget PIC 999V99.
           77 WnomMenu PIC A(50).
+          77 Wtrouve PIC 9.
 
           77 fp_stat PIC 9(2).
           77 Wplat PIC 9(1).

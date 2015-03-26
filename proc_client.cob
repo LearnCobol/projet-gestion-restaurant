@@ -264,7 +264,7 @@
          ELSE
            DISPLAY 'Le client na pas été supprimé'
          END-IF
-       NOT INVALID
+       NOT INVALID KEY
           DISPLAY 'Le client ne peut pas être supprimé car il a '
      - 'déjà effectuée une réservation'
        CLOSE fclients
