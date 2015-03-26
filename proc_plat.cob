@@ -35,7 +35,7 @@
             MOVE 'Dessert' TO fp_type
           END-EVALUATE
 
-          DISPLAY 'Prix du plat (0,0): '
+          DISPLAY 'Prix du plat (0.0): '
          ACCEPT fp_prix
          WRITE pTampon
 
@@ -90,7 +90,7 @@
           END-EVALUATE
 
 
-          DISPLAY 'Prix du plat (0,0): '
+          DISPLAY 'Prix du plat (0.0): '
          ACCEPT WprixP
        END-READ
        IF WnomP NOT = SPACE
@@ -163,13 +163,11 @@
        
         CLOSE fmenus
         
-        DISPLAY 'valeur in menu : ',WinMenu
-        
         IF WinMenu = 0 THEN
          DISPLAY 'à supprimer'
        
          PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
-           DISPLAY 'Supprimer définitivement le plat (1:oui 2:non) ?'
+           DISPLAY 'Supprimer définitivement le plat (1:oui 0:non) ?'
           ACCEPT Wchoix
          END-PERFORM
          
