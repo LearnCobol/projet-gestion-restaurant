@@ -353,6 +353,7 @@
 
 
        MENU_PRINCIPAL_DIR.
+
          PERFORM WITH TEST AFTER UNTIL WmenuD = 0
           PERFORM WITH TEST AFTER UNTIL WmenuD>=0 AND WmenuD<=6
            DISPLAY '************************************'

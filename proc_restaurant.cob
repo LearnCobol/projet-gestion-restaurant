@@ -1,3 +1,4 @@
+      * 
        RECHERCHER_NUM_RESTAURANT.
        CLOSE frestaurants
        OPEN I-O frestaurants 
@@ -45,9 +46,9 @@
         MOVE WnbPlaces TO fr_nbPlaces
         DISPLAY 'Site web du restaurant :'
         ACCEPT fr_sweb
-        PERFORM WITH TEST AFTER UNTIL Wactif = 2 OR Wactif = 1
+        PERFORM WITH TEST AFTER UNTIL Wactif = 1 OR Wactif = 2
           DISPLAY 'Le restaurant est-il actif ? '
-          DISPLAY '(2 : oui ; 1 : non) :'
+          DISPLAY '(1 : oui ; 2 : non) :'
           ACCEPT Wactif
         END-PERFORM
         MOVE Wactif TO fr_actif
@@ -57,18 +58,18 @@
           DISPLAY "Echec de l'insertion"
           NOT INVALID KEY 
           DISPLAY'Insertion OK'
-        DISPLAY 'Souhaitez-vous enregistrer un nouveau restaurant ?'
-          DISPLAY '0 : non, 1 : oui'
-          ACCEPT Wrep
         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
+        DISPLAY 'Souhaitez-vous enregistrer un nouveau restaurant ?'
+          DISPLAY '1 : OUI, 0 : NON'
+          ACCEPT Wrep
         END-PERFORM
         END-PERFORM
         CLOSE frestaurants.
 		
        CONSULTER_RESTAURANT.
 	   
-              PERFORM WITH TEST AFTER UNTIL Wrep = 0
-              OPEN INPUT frestaurants
+       PERFORM WITH TEST AFTER UNTIL Wrep = 0
+       OPEN INPUT frestaurants
         MOVE 0 TO Wchoix
         PERFORM WITH TEST AFTER UNTIL Wchoix <= 4 AND Wchoix > 0
          DISPLAY 'Que souhaitez vous faire ?'
@@ -119,12 +120,12 @@
             END-PERFORM
         END-EVALUATE
         CLOSE frestaurants
+        PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
               DISPLAY 'Nouvelle recherche ?'
               DISPLAY '1 : OUI, 0 : NON'
         ACCEPT Wrep
-        PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-              END-PERFORM
-              CLOSE frestaurants
+        END-PERFORM
+        CLOSE frestaurants
        END-PERFORM.
 	   
 	   
@@ -137,13 +138,13 @@
        DISPLAY 'Numero de telephone : ',fr_tel
        DISPLAY 'Capacite d accueil : ',fr_nbPlaces
        DISPLAY 'Site web : ',fr_sweb
-              IF fr_actif=0 THEN
+        IF fr_actif=1 THEN
          DISPLAY 'Restaurant actif : NON'
-           ELSE
-            DISPLAY 'Restaurant actif : OUI'
-         END-IF
-         DISPLAY '********************************'
-         DISPLAY ' '.
+        ELSE
+         DISPLAY 'Restaurant actif : OUI'
+        END-IF
+        DISPLAY '********************************'
+        DISPLAY ' '.
 
 	   
 	   
@@ -190,7 +191,7 @@
        ACCEPT WsWeb 
        PERFORM WITH TEST AFTER UNTIL Wactif <= 2 
         DISPLAY 'Le restaurant est-il actif ? '
-        DISPLAY '(2 : oui ; 1 : non) :'
+        DISPLAY '(1 : oui ; 2 : non) :'
         ACCEPT Wactif
        END-PERFORM   
        IF Wville NOT EQUALS SPACE
