@@ -1,4 +1,8 @@
-      * 
+      ************* RECHERCHER_NUM_RESTAURANT **************
+      * Retourner le premier identifiant disponible pour
+      * un restaurant dans le fichier frestaurants. 
+      * Fonction utilisée pour l'auto incrémentation
+      ******************************************************   
        RECHERCHER_NUM_RESTAURANT.
        CLOSE frestaurants
        OPEN I-O frestaurants 
@@ -17,7 +21,12 @@
          END-IF
          END-READ
        END-PERFORM.
-	  
+
+      **************** AJOUTER_RESTAURANT ******************
+      * Ajouter un restaurant dans le fichier frestaurant
+      * Saisir la rue, ville, le numéro, la capacité, 
+      * le site web et préciser si le restaurant est actif
+      ******************************************************  
        AJOUTER_RESTAURANT.
        OPEN I-O frestaurants
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
@@ -65,9 +74,14 @@
         END-PERFORM
         END-PERFORM
         CLOSE frestaurants.
-		
-       CONSULTER_RESTAURANT.
-	   
+	
+      *************** CONSULTER_RESTAURANT ******************
+      * Donner la possibilité à l'utilisateur d'afficher l'ensemble
+      * des informations des restaurants de la base ou de rechercher
+      * et d'afficher les informations d'un ( ou des ) restaurant(s)
+      * en fonction de son id ou de sa ville
+      ****************************************************** 
+       CONSULTER_RESTAURANT.	   
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
        OPEN INPUT frestaurants
         MOVE 0 TO Wchoix
@@ -113,7 +127,7 @@
                 AT END MOVE 1 TO Wfin
                 NOT AT END
                 IF Wville = fr_ville THEN
-                            MOVE 1 to WvilleOK
+                  MOVE 1 to WvilleOK
                   PERFORM AFFICHER_RESTAURANT
                 END-IF
               END-READ
@@ -128,8 +142,11 @@
         CLOSE frestaurants
        END-PERFORM.
 	   
-	   
-              AFFICHER_RESTAURANT.
+      *************** AFFICHER_RESTAURANT ******************
+      * Afficher toutes les informations du restaurant 
+      * correspondant à l'identifiant entré dans le tampon
+      ******************************************************	   
+       AFFICHER_RESTAURANT.
        DISPLAY '******* Identifiant :', fr_id,'*******'
               DISPLAY 'Localisation du restaurant :'
        DISPLAY '  Rue: 'fr_rue
@@ -147,7 +164,15 @@
         DISPLAY ' '.
 
 	   
-	   
+      *************** MODIFIER_RESTAURANT ******************
+      * Modifier les informations d'un restaurant de frestaurants
+      * Pour séléctionner le restaurant à modifier
+      * il faut saisir son identifiant
+      * Si un champ n'a pas besoin d'être resaisi, alors il
+      * suffit d'appuyer sur entrée
+      * Si l'id du restaurant saisi n'existe pas, alors un
+      * message d'erreur est affiché
+      ******************************************************	   
        MODIFIER_RESTAURANT.
        OPEN I-O frestaurants
        MOVE 0 TO Wfin
@@ -218,7 +243,14 @@
        REWRITE restTampon
        CLOSE frestaurants.
 	   
-	   
+      **************** SUPPRIMER_RESTAURANT ****************
+      * Supprimer un restaurant
+      * Saisir l'identifiant
+      * Si l'id du restaurant n'existe pas, alors on quitte la
+      * fonction
+      * Sinon on demande une confirmation à l'utilisateur
+      * et on supprime
+      ******************************************************	   
        SUPPRIMER_RESTAURANT.
        OPEN I-O frestaurants
        MOVE 0 TO Wfin
