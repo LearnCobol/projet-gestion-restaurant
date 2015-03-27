@@ -83,12 +83,7 @@
           DISPLAY 'Nom : ', fp_nom
           DISPLAY 'Type : ',fp_type
           DISPLAY 'Prix : ',fp_prix
-         END-READ
- 
-         READ fplats
-         INVALID KEY
-          DISPLAY 'Le plat n''existe pas'
-         NOT INVALID KEY
+          
           MOVE SPACE TO WtypeP
           MOVE LOW-VALUE TO WprixP
           DISPLAY 'Donnez les informations concernées '
