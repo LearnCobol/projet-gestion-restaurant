@@ -1,5 +1,11 @@
          OPERATION_RESERVATION.
  
+       DISPLAY '================================'
+       DISPLAY '========= MENU         ========='
+       DISPLAY '========= GESTION      ========='
+       DISPLAY '========= RESERVATION  ========='
+       DISPLAY '================================'
+
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu = 0 AND Wmenu<=6
          DISPLAY 'Que souhaitez vous faire ?'
@@ -10,20 +16,21 @@
          DISPLAY ' 5 - Consulter les statistiques de ventes'
          DISPLAY ' 6 - Supprimer une réservation'
          DISPLAY ' 0 - Quitter'
+         DISPLAY '================================'
          ACCEPT Wmenu
          EVALUATE Wmenu
-           WHEN 1
-             PERFORM AJOUTER_RESA
-           WHEN 2
-             PERFORM MODIFIER_RESA
+          WHEN 1
+           PERFORM AJOUTER_RESA
+          WHEN 2
+           PERFORM MODIFIER_RESA
           WHEN 3
-             PERFORM SAISIR_COMMANDE
-            WHEN 4 
-             PERFORM CONSULTER_RESA
-           WHEN 5
-             PERFORM STATISTIQUES_RESTAURANT
-           WHEN 6
-             PERFORM SUPPRIMER_RESERVATION
+           PERFORM SAISIR_COMMANDE
+          WHEN 4 
+           PERFORM CONSULTER_RESA
+          WHEN 5
+           PERFORM STATISTIQUES_RESTAURANT
+          WHEN 6
+           PERFORM SUPPRIMER_RESERVATION
          END-EVALUATE
         END-PERFORM
        END-PERFORM.

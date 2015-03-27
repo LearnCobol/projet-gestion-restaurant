@@ -264,9 +264,9 @@
       *************************************************************
        PERFORM WITH TEST AFTER UNTIL WmenuP = 0
         PERFORM WITH TEST AFTER UNTIL WmenuP>=0 AND WmenuP<=3
-         DISPLAY '*******************************'
-         DISPLAY '*********** ACCUEIL ***********'
-         DISPLAY '*******************************'
+         DISPLAY '************************************'
+         DISPLAY '************* ACCUEIL **************'
+         DISPLAY '************************************'
          DISPLAY 'Connexion ?'
          DISPLAY ' 1 - Oui (Gérant, Directeur)'
          DISPLAY ' 2 - Non (Utilisateur anonyme)'
@@ -274,7 +274,7 @@
       *on propose ici un accès administrateur sans limite ni condition
          DISPLAY ' 3 - Admin (demo)'
          DISPLAY ' 0 - Quitter'
-         DISPLAY '*******************************'
+         DISPLAY '************************************'
          ACCEPT WmenuP
         END-PERFORM
 
@@ -303,9 +303,9 @@
       *************************************************************
        CONNEXION.
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
-        DISPLAY '*********************************'
-        DISPLAY '*********** CONNEXION ***********'
-        DISPLAY '*********************************'
+        DISPLAY '************************************'
+        DISPLAY '************ CONNEXION *************'
+        DISPLAY '************************************'
 
         DISPLAY 'PSEUDO : '
         ACCEPT Wpseudo
@@ -321,7 +321,7 @@
            AT END MOVE 1 TO Wfin
            NOT AT END
            IF Wpseudo = fu_pseudo THEN
-            DISPLAY '---------------------------------'
+            DISPLAY '------------------------------------'
             DISPLAY 'MDP : '
             ACCEPT Wmdp
             IF Wmdp = fu_mdp THEN
