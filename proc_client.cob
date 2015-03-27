@@ -1,3 +1,4 @@
+     ********************RECHERCHER_NUM_CLIENT****************   
        RECHERCHER_NUM_CLIENT.
        OPEN INPUT fclients
        IF fc_stat = 41 THEN
@@ -20,7 +21,7 @@
          END-READ
        END-PERFORM.
        
-
+     ****************AJOUTER_CLIENT***************************
        AJOUTER_CLIENT.
        OPEN I-O fclients
        IF fc_stat = 35 THEN
@@ -48,6 +49,9 @@
          MOVE 0 TO fc_nbReserv
          MOVE 0 TO fc_pctReduc
          WRITE cliTampon
+         IF fc_stat = 0 THEN
+           DISPLAY "Le client a été enregistré"
+         END-IF
 
          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
           DISPLAY 'Souhaitez vous continuer? 0 : non, 1 : oui'
@@ -55,7 +59,7 @@
          END-PERFORM
        END-PERFORM
        CLOSE fclients.
-       
+     ********************AFFICHER_CLIENT**********************
        AFFICHER_CLIENT.
        MULTIPLY 100 BY fc_pctReduc GIVING WpctReduc
        DISPLAY 'Identifiant :', fc_id
@@ -69,6 +73,7 @@
        DISPLAY fc_codeP
        DISPLAY fc_ville. 
 
+     ***********************CONSULTER_CLIENT********************
        CONSULTER_CLIENT.
        OPEN INPUT fclients
        MOVE 0 TO Wchoix
@@ -78,7 +83,7 @@
         DISPLAY '2 - Faire une recherche à partir dun nom'
         DISPLAY '3 - Faire une recherche à partir dune ville'
         DISPLAY '4 - voir les coordonnées d''un client à partir'
-      -  'de son id'
+      -  ' de son id'
         ACCEPT Wchoix
        END-PERFORM
        EVALUATE Wchoix
@@ -115,7 +120,7 @@
            MOVE WvilleCli TO fc_ville
            START fclients, KEY IS = fc_ville
            INVALID KEY 
-           DISPLAY 'Aucun client n habite pas dans cette ville'
+           DISPLAY 'Aucun client n''habite dans cette ville'
            NOT INVALID KEY
             PERFORM WITH TEST AFTER UNTIL Wfin = 1
               READ fclients NEXT
@@ -130,12 +135,14 @@
            DISPLAY 'Donnez lidentifiant du client'
            ACCEPT fc_id
            READ fclients
-           INVALID KEY DISPLAY 'Aucun client ne possède' 
+           INVALID KEY DISPLAY 'Aucun client ne possède ' 
       -    'cet identifiant'
            NOT INVALID KEY 
            PERFORM AFFICHER_CLIENT           
        END-EVALUATE
        CLOSE fclients.
+
+     *****************MODIFIER_CLIENT****************************
       
        MODIFIER_CLIENT.
        OPEN I-O fclients
@@ -216,8 +223,14 @@
          MOVE WnbReservCli TO fc_nbReserv
        END-IF
        REWRITE cliTampon
+       IF fc_stat = 0 THEN  
+         DISPLAY 'Le client a été modifié'
+       ELSE
+         DISPLAY 'erreur lors de la modification'
+       END-IF
        CLOSE fclients.
 
+     ****************SUPPRIMER_CLIENT******************************
        SUPPRIMER_CLIENT.
        OPEN I-O fclients
        OPEN INPUT freservations
@@ -269,3 +282,60 @@
      - 'déjà effectuée une réservation'
        CLOSE fclients
        CLOSE freservations.
+
+     ****************CALCULER_PRCT_REDUC***************************
+
+       CALCULER_PRCT_REDUC.
+       OPEN INPUT freservations
+       OPEN I-O fclients
+       MOVE 0 TO Wfin
+       PERFORM WITH TEST AFTER UNTIL Wfin = 1
+         READ fclients NEXT
+         AT END MOVE 1 TO Wfin
+         NOT AT END           
+           DISPLAY 'test'
+           MOVE 0 TO fc_nbReserv
+           MOVE fc_id TO frs_idCli
+           MOVE fc_id TO WidCliSauv           
+           MOVE 0 TO Wtrouve
+           START freservations, KEY IS = frs_idCli
+           NOT INVALID KEY 
+             PERFORM WITH TEST AFTER UNTIL Wtrouve = 1
+               READ freservations NEXT
+               AT END MOVE 1 TO Wtrouve
+               NOT AT END 
+                 IF frs_idCli = WidCliSauv THEN
+                     ADD 1 TO fc_NbReserv
+                 END-IF
+               END-READ
+              END-PERFORM
+            END-START
+          IF fc_nbReserv < 10 THEN
+            MOVE 0 TO fc_pctReduc
+            ELSE IF fc_nbReserv < 20 THEN
+              MOVE 0.05 TO fc_pctReduc
+              ELSE IF fc_nbReserv < 30 THEN
+                MOVE 0.10 TO fc_pctReduc
+                ELSE IF fc_nbReserv < 40 THEN
+                  MOVE 0.15 TO fc_pctReduc
+                  ELSE IF fc_nbReserv < 50 THEN
+                  MOVE 0.20 TO fc_pctReduc
+                  ELSE
+                  MOVE 0.25 TO fc_pctReduc
+                  END-IF
+                END-IF
+              END-IF
+            END-IF
+          END-IF
+          REWRITE cliTampon
+          END-REWRITE
+          IF fc_stat NOT = 0 THEN
+            DISPLAY 'Erreur lors de l''insertion du client numéro',
+     - fc_id 
+          END-IF
+       END-PERFORM
+       DISPLAY 'Les clients ont été mis à jour'
+       CLOSE freservations
+       CLOSE fclients.
+           
+       
