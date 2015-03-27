@@ -155,7 +155,7 @@
        DISPLAY 'Numero de telephone : ',fr_tel
        DISPLAY 'Capacite d accueil : ',fr_nbPlaces
        DISPLAY 'Site web : ',fr_sweb
-        IF fr_actif=1 THEN
+        IF fr_actif=2 THEN
          DISPLAY 'Restaurant actif : NON'
         ELSE
          DISPLAY 'Restaurant actif : OUI'
