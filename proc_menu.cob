@@ -200,7 +200,7 @@
          
         READ fmenus 
         INVALID KEY
-         DISPLAY 'Aucun menu ne correspond à ce nom'
+         DISPLAY 'Aucun menu ne porte ce nom'
         NOT INVALID KEY
          MOVE 0 TO Wfin
          MOVE 0 TO Wtrouve
@@ -229,6 +229,7 @@
           MOVE 0 TO Wchoix
           PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
            DISPLAY 'Souhaité vous supprimé définitivement le menu'
+     -             '(1:oui 0:non ) ?'
            ACCEPT Wchoix    
           END-PERFORM
            
@@ -237,7 +238,7 @@
            INVALID KEY
             DISPLAY 'Le menu n''a pas été supprimé'
            NOT INVALID KEY
-            DISPLAY 'Le menu a été définitement supprimé'
+            DISPLAY 'Menu supprimé'
           ELSE
            DISPLAY 'La suppression a été annulée'  
           END-IF
