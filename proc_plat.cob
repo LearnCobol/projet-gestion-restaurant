@@ -15,32 +15,45 @@
          DISPLAY 'Donnez les informations du plat'
          DISPLAY 'Nom du plat: '
          ACCEPT fp_nom
-
-         PERFORM WITH TEST AFTER UNTIL Wplat>=1 AND Wplat<=3
-          DISPLAY 'Type du plat ?'
-          DISPLAY ' 1 - Entrée'
-          DISPLAY ' 2 - Plat'
-          DISPLAY ' 3 - Dessert'
-          ACCEPT Wplat
-         END-PERFORM
-
-         EVALUATE Wplat
-          WHEN 1
-           MOVE 'Entrée' TO fp_type
-          WHEN 2
-           MOVE 'Plat' TO fp_type
-          WHEN 3
-           MOVE 'Dessert' TO fp_type
-         END-EVALUATE
-
-         DISPLAY 'Prix du plat (0.0): '
-         ACCEPT fp_prix
+         
          WRITE pTampon END-WRITE
+         IF fp_stat = 0 THEN
 
-         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-          DISPLAY 'Souhaitez vous continuer? 0 : non, 1 : oui'
-          ACCEPT Wrep
-         END-PERFORM
+          PERFORM WITH TEST AFTER UNTIL Wplat>=1 AND Wplat<=3
+           DISPLAY 'Type du plat ?'
+           DISPLAY ' 1 - Entrée'
+           DISPLAY ' 2 - Plat'
+           DISPLAY ' 3 - Dessert'
+           ACCEPT Wplat
+          END-PERFORM
+
+          EVALUATE Wplat
+           WHEN 1
+            MOVE 'Entrée' TO fp_type
+            WHEN 2
+            MOVE 'Plat' TO fp_type
+           WHEN 3
+            MOVE 'Dessert' TO fp_type
+          END-EVALUATE
+
+          DISPLAY 'Prix du plat (0.0): '
+          ACCEPT fp_prix
+          WRITE pTampon END-WRITE
+          
+          IF fp_stat = 0 THEN
+           DISPLAY 'Plat enregistré'
+          END-IF
+          
+          REWRITE pTampon END-REWRITE
+
+          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
+           DISPLAY 'Souhaitez vous continuer? 0 : non, 1 : oui'
+           ACCEPT Wrep
+          END-PERFORM
+         ELSE
+          DISPLAY 'Erreur lors de l''enregistrement du plat : le nom'
+     -            ' du plat existe déjà'
+         END-IF
         END-PERFORM
 
         CLOSE fplats.
@@ -74,7 +87,7 @@
  
          READ fplats
          INVALID KEY
-          DISPLAY 'Erreur lors de la saisie de lidentifiant'
+          DISPLAY 'Le plat n''existe pas'
          NOT INVALID KEY
           MOVE SPACE TO WtypeP
           MOVE LOW-VALUE TO WprixP
@@ -101,25 +114,31 @@
 
           DISPLAY 'Prix du plat (0.0): '
           ACCEPT WprixP
+         
+          IF WnomP NOT = SPACE
+           MOVE WnomP TO fp_nom
+          END-IF
+         
+          IF WtypeP NOT = SPACE
+           MOVE WtypeP TO fp_type
+          END-IF
+ 
+          IF WprixP NOT =  0
+           MOVE WprixP TO fp_prix
+          END-IF
+
+          REWRITE pTampon
+          IF fp_stat = 0 THEN
+           DISPLAY 'Modification du plat enregistrée'
+          ELSE
+           DISPLAY 'Erreur lors de l''enregistrement de la'
+      -           ' modification du plat'
+          END-IF
+          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
+           DISPLAY 'Modifier un autre plat? 0 : non, 1 : oui'
+           ACCEPT Wrep
+          END-PERFORM
          END-READ
-         
-         IF WnomP NOT = SPACE
-          MOVE WnomP TO fp_nom
-         END-IF
-         
-         IF WtypeP NOT = SPACE
-          MOVE WtypeP TO fp_type
-         END-IF
-
-         IF WprixP NOT =  0
-          MOVE WprixP TO fp_prix
-         END-IF
-
-         REWRITE pTampon
-         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-          DISPLAY 'Modifier un autre plat? 0 : non, 1 : oui'
-          ACCEPT Wrep
-         END-PERFORM
         END-PERFORM
         
         DISPLAY '=============================='
@@ -191,7 +210,7 @@
            INVALID KEY
             DISPLAY 'erreur lors de la suppression'
            NOT INVALID KEY
-            DISPLAY 'le plat a été supprimé avec succès'
+            DISPLAY 'Le plat a été supprimé avec succès'
           ELSE
            DISPLAY 'Le plat na pas été supprimé'
           END-IF
