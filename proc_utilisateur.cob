@@ -36,19 +36,18 @@
        AJOUTER_UTILISATEUR.
 
        OPEN I-O futilisateurs
-
-       DISPLAY '|====================================|'
-       DISPLAY '|=========== AJOUT        ===========|'
-       DISPLAY '|===========  D''UN        ===========|'
-       DISPLAY '|===========  UTILISATEUR ===========|'
-       DISPLAY '|====================================|'
-       DISPLAY ' '
-
-
        MOVE 1 TO Wrep
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         PERFORM RECHERCHER_ID_UTILISATEUR
         MOVE Wid TO fu_id
+
+        DISPLAY '|====================================|'
+        DISPLAY '|=========== AJOUT        ===========|'
+        DISPLAY '|===========  D''UN        ===========|'
+        DISPLAY '|===========  UTILISATEUR ===========|'
+        DISPLAY '|====================================|'
+        DISPLAY ' '
+
         DISPLAY 'Donnez les informations de l''utilisateur'
         DISPLAY 'Pseudo de l''utilisateur: '
         ACCEPT Wpseudo
@@ -77,7 +76,7 @@
          END-PERFORM
         NOT INVALID KEY
          DISPLAY 'Pseudo déjà utilisé'
-         DISPLAY '=============================='
+         DISPLAY '-====================================-'
         END-START
        END-PERFORM
        CLOSE futilisateurs.
@@ -92,17 +91,16 @@
        MODIFIER_UTILISATEUR.
 
        OPEN I-O futilisateurs
-
-       DISPLAY '|====================================|'
-       DISPLAY '|=========== MODIFICATION ===========|'
-       DISPLAY '|===========  D''UN        ===========|'
-       DISPLAY '|===========  UTILISATEUR ===========|'
-       DISPLAY '|====================================|'
-       DISPLAY ' '
-
-
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
-        DISPLAY 'Donnez le pseudo de l''utilisateur :'
+
+        DISPLAY '|====================================|'
+        DISPLAY '|=========== MODIFICATION ===========|'
+        DISPLAY '|===========  D''UN        ===========|'
+        DISPLAY '|===========  UTILISATEUR ===========|'
+        DISPLAY '|====================================|'
+        DISPLAY ' '
+
+        DISPLAY 'Donnez le pseudo de l''utilisateur à modifier :'
         ACCEPT Wpseudo
         MOVE Wpseudo TO fu_pseudo
         START futilisateurs, KEY IS = fu_pseudo
@@ -111,7 +109,7 @@
         NOT INVALID KEY
          READ futilisateurs NEXT
          IF Wpseudo = fu_pseudo THEN
-          DISPLAY '================================'
+          DISPLAY '-====================================-'
           DISPLAY 'ID : ', fu_id
           DISPLAY 'Pseudo : ',fu_pseudo
           DISPLAY 'Mdp : ',fu_mdp
@@ -160,8 +158,8 @@
          ACCEPT Wrep
         END-PERFORM
        END-PERFORM
-       CLOSE futilisateurs
-       DISPLAY '================================'.
+       DISPLAY '-====================================-'
+       CLOSE futilisateurs.
 
 
       *************************************************************
@@ -173,17 +171,16 @@
        SUPPRIMER_UTILISATEUR.
 
        OPEN I-O futilisateurs
-
-       DISPLAY '|====================================|'
-       DISPLAY '|=========== SUPPRESSION  ===========|'
-       DISPLAY '|===========  D''UN        ===========|'
-       DISPLAY '|===========  UTILISATEUR ===========|'
-       DISPLAY '|====================================|'
-       DISPLAY ' '
-
-
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
-        DISPLAY 'Donnez le pseudo de l''utilisateur :'
+
+        DISPLAY '|====================================|'
+        DISPLAY '|=========== SUPPRESSION  ===========|'
+        DISPLAY '|===========  D''UN        ===========|'
+        DISPLAY '|===========  UTILISATEUR ===========|'
+        DISPLAY '|====================================|'
+        DISPLAY ' '
+
+        DISPLAY 'Donnez le pseudo de l''utilisateur à supprimer:'
         ACCEPT Wpseudo
         MOVE Wpseudo TO fu_pseudo
         START futilisateurs, KEY IS = fu_pseudo
@@ -192,7 +189,7 @@
         NOT INVALID KEY
          READ futilisateurs NEXT
          IF Wpseudo = fu_pseudo THEN
-          DISPLAY '================================'
+          DISPLAY '-====================================-'
           DISPLAY 'ID : ', fu_id
           DISPLAY 'Pseudo : ',fu_pseudo
           DISPLAY 'Mdp : ',fu_mdp
@@ -215,10 +212,11 @@
          END-IF
         END-START
         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-         DISPLAY 'Modifier un autre utilisateur ? 1 : oui, 0 : non'
+         DISPLAY 'Supprimer un autre utilisateur ? 1 : oui, 0 : non'
          ACCEPT Wrep
         END-PERFORM
        END-PERFORM
+       DISPLAY '-====================================-'
        CLOSE futilisateurs.
 
 
@@ -232,19 +230,18 @@
        CONSULTER_UTILISATEUR_ROLE.
 
        OPEN INPUT futilisateurs
-
-       DISPLAY '|====================================|'
-       DISPLAY '|=========== CONSULTATION ===========|'
-       DISPLAY '|===========  D''UN        ===========|'
-       DISPLAY '|===========  UTILISATEUR ===========|'
-       DISPLAY '|=========== PAR ROLE     ===========|'
-       DISPLAY '|====================================|'
-       DISPLAY ' '
-
-
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         MOVE 0 TO Wfin
-        DISPLAY 'Choisir le role'
+
+        DISPLAY '|====================================|'
+        DISPLAY '|=========== CONSULTATION ===========|'
+        DISPLAY '|===========  D''UN        ===========|'
+        DISPLAY '|===========  UTILISATEUR ===========|'
+        DISPLAY '|=========== PAR ROLE     ===========|'
+        DISPLAY '|====================================|'
+        DISPLAY ' '
+
+        DISPLAY 'Choisir le role à consulter'
         PERFORM WITH TEST AFTER UNTIL Wrep>=1 AND Wrep<=2
          DISPLAY 'Role de l''utilisateur ?'
          DISPLAY ' 1 - Gérant'
@@ -262,9 +259,9 @@
         INVALID KEY 
          DISPLAY 'Il n''y a pas d''utilisateur avec ce role'
         NOT INVALID KEY
-         DISPLAY '================================'
+         DISPLAY '-====================================-'
          DISPLAY 'Tous les ',fu_role
-         DISPLAY '================================'
+         DISPLAY '-====================================-'
          PERFORM WITH TEST AFTER UNTIL Wfin = 1
           READ futilisateurs NEXT
           AT END
@@ -275,7 +272,7 @@
             DISPLAY 'Pseudo : ',fu_pseudo
             DISPLAY 'Mdp : ',fu_mdp
             DISPLAY 'Role : ',fu_role
-            DISPLAY '--------------------------------'
+            DISPLAY '--------------------------------------'
            END-IF
           END-READ
          END-PERFORM
@@ -285,8 +282,8 @@
          END-PERFORM
         END-START
        END-PERFORM
-       CLOSE futilisateurs
-       DISPLAY '================================'.
+       DISPLAY '-====================================-'
+       CLOSE futilisateurs.
 
 
       *************************************************************
@@ -320,6 +317,6 @@
          DISPLAY 'Role : ',fu_role
         END-READ
        END-PERFORM
-       CLOSE futilisateurs
-       DISPLAY '================================'.
+       DISPLAY '-====================================-'
+       CLOSE futilisateurs.
 

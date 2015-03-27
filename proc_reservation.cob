@@ -70,6 +70,7 @@
          MOVE fc_id TO WidCliSauv
          MOVE 1 TO WvaleurOK
        END-PERFORM
+       DISPLAY '-====================================-'
        CLOSE fclients.
 
 
@@ -120,6 +121,7 @@
          MOVE 1 TO WvaleurOK         
          MOVE fr_nbPlaces TO WcapaciteRestaurant
        END-PERFORM
+       DISPLAY '-====================================-'
        CLOSE frestaurants.
 
 
@@ -270,6 +272,7 @@
           ACCEPT Wrep
          END-PERFORM
        END-PERFORM
+       DISPLAY '-====================================-'
        CLOSE freservations.
 
 
@@ -390,6 +393,7 @@
                   END-IF
               END-PERFORM          
        END-EVALUATE
+       DISPLAY '-====================================-'
        CLOSE freservations.
 
 
@@ -595,6 +599,7 @@
              ACCEPT Wlibre
           END-IF
         END-PERFORM
+       DISPLAY '-====================================-'
        CLOSE freservations.
 
 
@@ -705,6 +710,7 @@
      -         '(année précédente : ',WplatsAchetesAnt,')'
        END-IF
 
+       DISPLAY '-====================================-'
         CLOSE freservations
         CLOSE frestaurants.
 
@@ -791,6 +797,7 @@
 		   
          END-IF  
          END-READ
+       DISPLAY '-====================================-'
        CLOSE freservations.
 
 
@@ -833,4 +840,5 @@
          ELSE
           DISPLAY 'Impossible de supprimer un reservation déjà payée'  
          END-IF
+       DISPLAY '-====================================-'
        CLOSE freservations.

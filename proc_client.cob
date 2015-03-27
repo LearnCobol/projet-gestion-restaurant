@@ -70,7 +70,7 @@
           ACCEPT Wrep
          END-PERFORM
        END-PERFORM
-       DISPLAY '|====================================|'
+       DISPLAY '-====================================-'
        CLOSE fclients.
       ********************AFFICHER_CLIENT**********************
       *Affiche tous les attributs d'un client                 *
@@ -115,7 +115,7 @@
         DISPLAY '4 - voir les coordonnées d''un client à partir'
       -  ' de son id'
         DISPLAY ' '
-        DISPLAY '|====================================|'
+        DISPLAY '-====================================-'
         ACCEPT Wchoix
        END-PERFORM
        EVALUATE Wchoix
@@ -181,7 +181,7 @@
             DISPLAY ' '
            NOT INVALID KEY 
             PERFORM AFFICHER_CLIENT
-        DISPLAY '|====================================|'
+       DISPLAY '-====================================-'
        END-EVALUATE
        CLOSE fclients.
 
@@ -281,6 +281,7 @@
        ELSE
          DISPLAY 'erreur lors de la modification'
        END-IF
+       DISPLAY '-====================================-'
        CLOSE fclients.
 
       ****************SUPPRIMER_CLIENT******************************
@@ -344,6 +345,7 @@
        NOT INVALID KEY
           DISPLAY 'Le client ne peut pas être supprimé car il a '
      - 'déjà effectuée une réservation'
+       DISPLAY '-====================================-'
        CLOSE fclients
        CLOSE freservations.
 
@@ -405,6 +407,7 @@
        DISPLAY ' '
        DISPLAY 'Les clients ont été mis à jour'
        DISPLAY ' '
+       DISPLAY '-====================================-'
        CLOSE freservations
        CLOSE fclients.
            

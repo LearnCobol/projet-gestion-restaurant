@@ -83,6 +83,7 @@
           ACCEPT Wrep
         END-PERFORM
         END-PERFORM
+       DISPLAY '-====================================-'
         CLOSE frestaurants.
 	
 
@@ -159,6 +160,7 @@
               DISPLAY '1 : OUI, 0 : NON'
         ACCEPT Wrep
         END-PERFORM
+       DISPLAY '-====================================-'
         CLOSE frestaurants
        END-PERFORM.
 
@@ -271,6 +273,7 @@
          MOVE Wactif TO fr_actif
        END-IF
        REWRITE restTampon
+       DISPLAY '-====================================-'
        CLOSE frestaurants.
 	   
 
@@ -314,4 +317,5 @@
          ELSE
           DISPLAY 'Erreur lors de la suppression'
          END-IF
+       DISPLAY '-====================================-'
        CLOSE frestaurants.

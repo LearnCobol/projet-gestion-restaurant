@@ -19,7 +19,7 @@
         PERFORM WITH TEST AFTER UNTIL Wfin = 1
          DISPLAY 'Saisir le nom du menu :'
          ACCEPT fm_nom
-         DISPLAY '==='
+         DISPLAY '--------------------------------------'
          DISPLAY ' '
          
          WRITE mTampon END-WRITE
@@ -108,7 +108,7 @@
          END-IF
         END-PERFORM
 
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
 
         CLOSE fplats
         CLOSE fmenus.
@@ -132,7 +132,7 @@
 
         DISPLAY 'Saisir le nom du menu à afficher :'
         ACCEPT fm_nom
-        DISPLAY '==='
+        DISPLAY '--------------------------------------'
         DISPLAY ' '
           
         OPEN INPUT fmenus
@@ -171,7 +171,7 @@
          CLOSE fplats
         END-READ
 
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
 
         CLOSE fmenus.
 
@@ -196,7 +196,7 @@
         OPEN INPUT freservations
         DISPLAY 'Saisir le nom du menu à supprimer :'
         ACCEPT fm_nom
-        DISPLAY '==='
+        DISPLAY '--------------------------------------'
          
         READ fmenus 
         INVALID KEY
@@ -246,7 +246,7 @@
           
         END-READ
          
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
           
         CLOSE freservations
         CLOSE fmenus.
@@ -284,7 +284,7 @@
          END-READ
         END-PERFORM
 
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
 
         CLOSE fmenus.
 
@@ -294,20 +294,21 @@
       * Saisir le nouveau prix du menu
       ******************************************************
        MODIFIER_MENU.
-       
-        DISPLAY '=============================='
-        DISPLAY '========  MODIFIER   ========='
-        DISPLAY '========    UN       ========='
-        DISPLAY '========      MENU   ========='
-        DISPLAY '=============================='
-        
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MODIFICATION ===========|'
+       DISPLAY '|===========      DE      ===========|'
+       DISPLAY '|===========         MENU ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
                  
         OPEN I-O fmenus
 
         DISPLAY ' '
         DISPLAY 'Saisir le nom du menu à modifier :'
         ACCEPT fm_nom
-        DISPLAY '==='
+        DISPLAY '--------------------------------------'
          
         READ fmenus 
         INVALID KEY
@@ -317,7 +318,7 @@
          ACCEPT fm_prix
          REWRITE mTampon END-REWRITE
         END-READ
-         
-        DISPLAY '=============================='
+
+       DISPLAY '-====================================-'
           
         CLOSE fmenus.

@@ -57,6 +57,7 @@
          END-IF
         END-PERFORM
 
+       DISPLAY '-====================================-'
         CLOSE fplats.
 
       ****************** MODIFIER_PLAT *********************
@@ -88,7 +89,7 @@
          INVALID KEY 
           DISPLAY 'Aucun plat ne porte ce nom'
          NOT INVALID KEY
-          DISPLAY '=============================='
+          DISPLAY '-====================================-'
           DISPLAY 'Nom : ', fp_nom
           DISPLAY 'Type : ',fp_type
           DISPLAY 'Prix : ',fp_prix
@@ -145,7 +146,7 @@
          END-READ
         END-PERFORM
         
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
         
         CLOSE fplats.
 
@@ -178,7 +179,7 @@
          DISPLAY 'Aucun plat ne porte ce nom'
         NOT INVALID KEY
        
-         DISPLAY '=============================='
+         DISPLAY '-====================================-'
          DISPLAY 'Nom : ', fp_nom
          DISPLAY 'Type : ',fp_type
          DISPLAY 'Prix : ',fp_prix
@@ -234,7 +235,7 @@
          END-IF
         END-READ
 
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
         
         CLOSE fplats.
 
@@ -268,13 +269,13 @@
           MOVE 1 TO Wfin
          NOT AT END
           IF fp_prix <= Wbudget THEN
-           DISPLAY '=============================='
+           DISPLAY '-====================================-'
            DISPLAY fp_nom,' ',fp_type, ' (',fp_prix,' €)'
           END-IF
          END-READ
         END-PERFORM
 
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
 
         CLOSE fplats.
 
@@ -328,7 +329,7 @@
              MOVE 1 TO Wfin
             NOT AT END
              IF WtypeP = fp_type THEN
-              DISPLAY '=============================='
+              DISPLAY '-====================================-'
               DISPLAY 'Nom : ', fp_nom
               DISPLAY 'Type : ',fp_type
               DISPLAY 'Prix : ',fp_prix
@@ -342,7 +343,7 @@
            END-PERFORM
           END-PERFORM
           
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
 
         CLOSE fplats.
 
@@ -370,13 +371,13 @@
          AT END
           MOVE 1 TO Wfin
          NOT AT END
-          DISPLAY '=============================='
+          DISPLAY '-====================================-'
           DISPLAY 'Nom : ', fp_nom
           DISPLAY 'Type : ',fp_type
           DISPLAY 'Prix : ',fp_prix
          END-READ
         END-PERFORM
 
-        DISPLAY '=============================='
+       DISPLAY '-====================================-'
 
         CLOSE fplats.
