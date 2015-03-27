@@ -18,87 +18,96 @@
 
         PERFORM WITH TEST AFTER UNTIL Wfin = 1
          DISPLAY ' '
-         DISPLAY 'Saisir le nom du menu menu :'
+         DISPLAY 'Saisir le nom du menu :'
          ACCEPT fm_nom
          DISPLAY '==='
          DISPLAY ' '
+         
+         WRITE mTampon END-WRITE
+         IF fp_stat = 0 THEN
+         
+         OPEN INPUT fplats
+         MOVE 0 TO WprixCarte
+         MOVE 0 TO Wfin
 
-         READ fmenus
-         INVALID KEY
-          MOVE 1 TO Wfin
-         NOT INVALID KEY
-          DISPLAY 'Un menu porte déjà ce nom'
-         END-READ
-        END-PERFORM
-
-        OPEN INPUT fplats
-        MOVE 0 TO WprixCarte
-        MOVE 0 TO Wfin
-
-        PERFORM WITH TEST AFTER UNTIL Wfin = 1
-         DISPLAY 'Nom de lentrée : '     
-         ACCEPT fp_nom
+         PERFORM WITH TEST AFTER UNTIL Wfin = 1
+          DISPLAY 'Nom de lentrée : '     
+          ACCEPT fp_nom
  
-         READ fplats
-         INVALID KEY
-          DISPLAY 'Aucune entrée ne porte ce nom'
-         NOT INVALID KEY
-          IF fp_type = 'Entrée'
-           MOVE fp_nom TO fm_entree
-           ADD fp_prix TO WprixCarte
-           MOVE 1 TO Wfin
-          ELSE
+          READ fplats
+          INVALID KEY
            DISPLAY 'Aucune entrée ne porte ce nom'
-          END-IF
-         END-READ
-        END-PERFORM
+          NOT INVALID KEY
+           IF fp_type = 'Entrée'
+            MOVE fp_nom TO fm_entree
+            ADD fp_prix TO WprixCarte
+             MOVE 1 TO Wfin
+           ELSE
+            DISPLAY 'Aucune entrée ne porte ce nom'
+           END-IF
+          END-READ
+         END-PERFORM
 
-        MOVE 0 TO Wfin
-        PERFORM WITH TEST AFTER UNTIL Wfin = 1
-         DISPLAY 'Nom du plat : '     
-         ACCEPT fp_nom
-         READ fplats
-         INVALID KEY
-          DISPLAY 'Aucun plat ne porte ce nom'
-         NOT INVALID KEY
-          IF fp_type = 'Plat'
-           MOVE fp_nom TO fm_plat
-           ADD fp_prix TO WprixCarte
-           MOVE 1 TO Wfin
-          ELSE
+         MOVE 0 TO Wfin
+         PERFORM WITH TEST AFTER UNTIL Wfin = 1
+          DISPLAY 'Nom du plat : '     
+          ACCEPT fp_nom
+          READ fplats
+          INVALID KEY
            DISPLAY 'Aucun plat ne porte ce nom'
-          END-IF
-         END-READ
-        END-PERFORM
-
-        MOVE 0 TO Wfin
-        PERFORM WITH TEST AFTER UNTIL Wfin = 1
-         DISPLAY 'Nom du dessert : '     
-         ACCEPT fp_nom
-         READ fplats
-         INVALID KEY
-          DISPLAY 'Aucun dessert ne porte ce nom'
-         NOT INVALID KEY
-          IF fp_type = 'Dessert'
-           MOVE fp_nom TO fm_dessert
-           ADD fp_prix TO WprixCarte
-           MOVE 1 TO Wfin
-          ELSE
+          NOT INVALID KEY
+           IF fp_type = 'Plat'
+           MOVE fp_nom TO fm_plat
+            ADD fp_prix TO WprixCarte
+            MOVE 1 TO Wfin
+           ELSE
+            DISPLAY 'Aucun plat ne porte ce nom'
+           END-IF
+          END-READ
+         END-PERFORM
+  
+         MOVE 0 TO Wfin
+         PERFORM WITH TEST AFTER UNTIL Wfin = 1
+          DISPLAY 'Nom du dessert : '     
+          ACCEPT fp_nom
+          READ fplats
+          INVALID KEY
            DISPLAY 'Aucun dessert ne porte ce nom'
+          NOT INVALID KEY
+           IF fp_type = 'Dessert'
+            MOVE fp_nom TO fm_dessert
+            ADD fp_prix TO WprixCarte
+            MOVE 1 TO Wfin
+           ELSE
+            DISPLAY 'Aucun dessert ne porte ce nom'
+           END-IF
+          END-READ
+         END-PERFORM
+
+         PERFORM WITH TEST AFTER UNTIL fm_prix < WprixCarte
+          DISPLAY 'Prix du menu (tarif à la carte :',WprixCarte,'€)'
+          ACCEPT fm_prix
+ 
+          IF fm_prix > WprixCarte THEN
+           DISPLAY 'Le prix du menu doit être inférieur à la somme '
+     -             'des prix des plats'
           END-IF
-         END-READ
-        END-PERFORM
-
-        PERFORM WITH TEST AFTER UNTIL fp_prix <= WprixCarte
-         DISPLAY 'Prix du menu (tarif à la carte :',WprixCarte,'€)'
-         ACCEPT fm_prix
-
-         IF fp_prix > WprixCarte THEN
-          DISPLAY 'prix du menu < prix à la carte'
+         END-PERFORM
+ 
+         REWRITE mTampon END-REWRITE  
+          
+          IF fp_stat = 0 THEN
+           DISPLAY 'Menu enregistré'
+          END-IF       
+         
+          PERFORM WITH TEST AFTER UNTIL Wfin = 0 OR Wfin = 1
+           DISPLAY 'Souhaitez vous continuer? 0 : non, 1 : oui'
+           ACCEPT Wrep
+          END-PERFORM
+         ELSE
+          DISPLAY 'Un menu porte déjà ce nom'
          END-IF
         END-PERFORM
-
-        WRITE mTampon END-WRITE
 
         DISPLAY '=============================='
 
@@ -130,7 +139,7 @@
 
         READ fmenus
         INVALID KEY
-         DISPLAY 'Aucun menu ne porte ce nom !'
+         DISPLAY 'Aucun menu ne porte ce nom'
         NOT INVALID KEY
          DISPLAY 'MENU "',fm_nom,'" (',fm_prix,' €)'
          OPEN INPUT fplats
@@ -191,7 +200,7 @@
          
         READ fmenus 
         INVALID KEY
-         DISPLAY 'Aucun menu ne correspond à ce nom'
+         DISPLAY 'Aucun menu ne porte ce nom'
         NOT INVALID KEY
          MOVE 0 TO Wfin
          MOVE 0 TO Wtrouve
@@ -220,6 +229,7 @@
           MOVE 0 TO Wchoix
           PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
            DISPLAY 'Souhaité vous supprimé définitivement le menu'
+     -             '(1:oui 0:non ) ?'
            ACCEPT Wchoix    
           END-PERFORM
            
@@ -228,7 +238,7 @@
            INVALID KEY
             DISPLAY 'Le menu n''a pas été supprimé'
            NOT INVALID KEY
-            DISPLAY 'Le menu a été définitement supprimé'
+            DISPLAY 'Menu supprimé'
           ELSE
            DISPLAY 'La suppression a été annulée'  
           END-IF
@@ -298,7 +308,7 @@
          
         READ fmenus 
         INVALID KEY
-         DISPLAY 'Aucun menu ne correspond à ce nom'
+         DISPLAY 'Aucun menu ne porte ce nom'
         NOT INVALID KEY
          DISPLAY 'Saisir le nouveau prix du menu'
          ACCEPT fm_prix
