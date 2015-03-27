@@ -88,7 +88,6 @@
        MODIFIER_UTILISATEUR.
 
        OPEN I-O futilisateurs
-       MOVE 0 TO Wfin
        DISPLAY '================================'
        DISPLAY '======== MODIFICATION  ========='
        DISPLAY '======== D UN          ========='
@@ -96,6 +95,7 @@
        DISPLAY '================================'
 
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
+        MOVE 0 TO Wfin
         DISPLAY 'Donnez le pseudo de l''utilisateur :'
         ACCEPT Wpseudo
         MOVE Wpseudo TO fu_pseudo
@@ -128,8 +128,8 @@
          ACCEPT Wpseudo
          DISPLAY 'Nouveau mdp'
          ACCEPT Wmdp
-         DISPLAY 'Rentrez seulement les informations concernées par
-     -   la modification'
+         DISPLAY 'Rentrez seulement les informations concernées par '
+     -   'la modification'
          DISPLAY 'Nouveau role de l''utilisateur'     
          PERFORM WITH TEST AFTER UNTIL Wchoix>=1 AND Wchoix<=2
           DISPLAY 'Role de l''utilisateur ?'
@@ -208,7 +208,8 @@
          NOT INVALID KEY
           MOVE 0 TO Wchoix
           PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
-           DISPLAY 'Supprimer définitivement l''utilisateur ? 1/0'
+           DISPLAY 'Supprimer définitivement l''utilisateur ? '
+     -     '1 : oui, 0 : non'
            ACCEPT Wchoix
           END-PERFORM
           IF Wchoix = 1 THEN
@@ -222,7 +223,7 @@
           END-IF
          END-READ
          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-          DISPLAY 'Modifier un autre utilisateur ? 0 : non, 1 : oui'
+          DISPLAY 'Modifier un autre utilisateur ? 1 : oui, 0 : non'
           ACCEPT Wrep
          END-PERFORM
        END-PERFORM
@@ -239,7 +240,6 @@
        CONSULTER_UTILISATEUR_ROLE.
 
        OPEN INPUT futilisateurs
-       MOVE 0 TO Wfin
        DISPLAY '================================'
        DISPLAY '======== CONSULTATION  ========='
        DISPLAY '======== DES           ========='
@@ -248,6 +248,7 @@
        DISPLAY '================================'
 
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
+        MOVE 0 TO Wfin
         DISPLAY 'Choisir le role'
         PERFORM WITH TEST AFTER UNTIL Wrep>=1 AND Wrep<=2
          DISPLAY 'Role de l''utilisateur ?'
@@ -266,23 +267,25 @@
         INVALID KEY 
          DISPLAY 'Il n''y a pas d''utilisateur avec ce role'
         NOT INVALID KEY
+         DISPLAY '================================'
+         DISPLAY 'Tous les ',fu_role
+         DISPLAY '================================'
          PERFORM WITH TEST AFTER UNTIL Wfin = 1
           READ futilisateurs NEXT
           AT END
            MOVE 1 TO Wfin
           NOT AT END
            IF Wrole = fu_role THEN
-            DISPLAY 'Tous les ',fu_role
-            DISPLAY '================================'
             DISPLAY 'ID : ', fu_id
             DISPLAY 'Pseudo : ',fu_pseudo
             DISPLAY 'Mdp : ',fu_mdp
             DISPLAY 'Role : ',fu_role
+            DISPLAY '--------------------------------'
            END-IF
           END-READ
          END-PERFORM
          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-          DISPLAY 'Consulter autre role utilisateur ? 0 : non, 1 : oui'
+          DISPLAY 'Consulter autre role utilisateur ? 1 : oui, 0 : non'
           ACCEPT Wrep
          END-PERFORM
        END-PERFORM
