@@ -75,6 +75,7 @@
         NOT INVALID KEY
          DISPLAY 'Pseudo déjà utilisé'
          DISPLAY '=============================='
+        END-START
        END-PERFORM
        CLOSE futilisateurs.
 
@@ -95,7 +96,6 @@
        DISPLAY '================================'
 
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
-        MOVE 0 TO Wfin
         DISPLAY 'Donnez le pseudo de l''utilisateur :'
         ACCEPT Wpseudo
         MOVE Wpseudo TO fu_pseudo
@@ -103,24 +103,14 @@
         INVALID KEY 
          DISPLAY 'Aucun utilisateur n''a ce pseudo'
         NOT INVALID KEY
-         PERFORM WITH TEST AFTER UNTIL Wfin = 1
-          READ futilisateurs NEXT
-          AT END
-           MOVE 1 TO Wfin
-          NOT AT END
-           IF Wpseudo = fu_pseudo THEN
-            DISPLAY '================================'
-            DISPLAY 'ID : ', fu_id
-            DISPLAY 'Pseudo : ',fu_pseudo
-            DISPLAY 'Mdp : ',fu_mdp
-            DISPLAY 'Role : ',fu_role
-           END-IF
-          END-READ
-         END-PERFORM
-        READ futilisateurs
-        INVALID KEY
-         DISPLAY 'Erreur lors de la saisie de lidentifiant'
-        NOT INVALID KEY
+         READ futilisateurs NEXT
+         IF Wpseudo = fu_pseudo THEN
+          DISPLAY '================================'
+          DISPLAY 'ID : ', fu_id
+          DISPLAY 'Pseudo : ',fu_pseudo
+          DISPLAY 'Mdp : ',fu_mdp
+          DISPLAY 'Role : ',fu_role
+         END-IF
          MOVE SPACE TO Wrole
          MOVE SPACE TO Wpseudo
          MOVE SPACE TO Wmdp
@@ -143,18 +133,22 @@
           WHEN 2
            MOVE 'Directeur' TO Wrole
          END-EVALUATE
-        END-READ
-        IF Wpseudo NOT = SPACE
-         MOVE Wpseudo TO fu_pseudo
-        END-IF 
-        IF Wmdp NOT = SPACE
-         MOVE Wmdp TO fu_mdp
-        END-IF 
-        IF Wrole NOT = SPACE
-         MOVE Wrole TO fu_role
-        END-IF
-        REWRITE uTampon
-        DISPLAY 'Utilisateur modifié'
+         IF Wpseudo NOT = SPACE
+          MOVE Wpseudo TO fu_pseudo
+         END-IF 
+         IF Wmdp NOT = SPACE
+          MOVE Wmdp TO fu_mdp
+         END-IF 
+         IF Wrole NOT = SPACE
+          MOVE Wrole TO fu_role
+         END-IF
+         REWRITE uTampon
+         IF fu_stat = 0 THEN
+          DISPLAY 'Utilisateur modifié'
+         ELSE
+          DISPLAY fu_stat
+         END-IF
+        END-START
         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
          DISPLAY 'Modifier un autre utilisateur ? 1 : oui, 0 : non'
          ACCEPT Wrep
@@ -173,7 +167,6 @@
        SUPPRIMER_UTILISATEUR.
 
        OPEN I-O futilisateurs
-       MOVE 0 TO Wfin
        DISPLAY '================================'
        DISPLAY '======== SUPPRESSION   ========='
        DISPLAY '======== D UN          ========='
@@ -188,44 +181,34 @@
         INVALID KEY 
          DISPLAY 'Aucun utilisateur n''a ce pseudo'
         NOT INVALID KEY
-         PERFORM WITH TEST AFTER UNTIL Wfin = 1
-          READ futilisateurs NEXT
-          AT END
-           MOVE 1 TO Wfin
-          NOT AT END
-           IF Wpseudo = fu_pseudo THEN
-            DISPLAY '================================'
-            DISPLAY 'ID : ', fu_id
-            DISPLAY 'Pseudo : ',fu_pseudo
-            DISPLAY 'Mdp : ',fu_mdp
-            DISPLAY 'Role : ',fu_role
-           END-IF
-          END-READ
+         READ futilisateurs NEXT
+         IF Wpseudo = fu_pseudo THEN
+          DISPLAY '================================'
+          DISPLAY 'ID : ', fu_id
+          DISPLAY 'Pseudo : ',fu_pseudo
+          DISPLAY 'Mdp : ',fu_mdp
+          DISPLAY 'Role : ',fu_role
+         END-IF
+         MOVE 0 TO Wchoix
+         PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
+          DISPLAY 'Supprimer définitivement l''utilisateur ? '
+     -    '1 : oui, 0 : non'
+          ACCEPT Wchoix
          END-PERFORM
-         READ futilisateurs
-         INVALID KEY
-          DISPLAY 'Erreur lors de la saisie de lidentifiant'
-         NOT INVALID KEY
-          MOVE 0 TO Wchoix
-          PERFORM WITH TEST AFTER UNTIL Wchoix = 1 OR Wchoix = 0
-           DISPLAY 'Supprimer définitivement l''utilisateur ? '
-     -     '1 : oui, 0 : non'
-           ACCEPT Wchoix
-          END-PERFORM
-          IF Wchoix = 1 THEN
-           DELETE futilisateurs
-           INVALID KEY
-            DISPLAY 'erreur lors de la suppression'
-           NOT INVALID KEY
-            DISPLAY 'L''utilisateur a été supprimé avec succès'
-          ELSE
-           DISPLAY 'L''utilisateur na pas été supprimé'
-          END-IF
-         END-READ
-         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-          DISPLAY 'Modifier un autre utilisateur ? 1 : oui, 0 : non'
-          ACCEPT Wrep
-         END-PERFORM
+         IF Wchoix = 1 THEN
+          DELETE futilisateurs
+          INVALID KEY
+           DISPLAY 'erreur lors de la suppression'
+          NOT INVALID KEY
+           DISPLAY 'L''utilisateur a été supprimé avec succès'
+         ELSE
+          DISPLAY 'L''utilisateur na pas été supprimé'
+         END-IF
+        END-START
+        PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
+         DISPLAY 'Modifier un autre utilisateur ? 1 : oui, 0 : non'
+         ACCEPT Wrep
+        END-PERFORM
        END-PERFORM
        CLOSE futilisateurs.
 
@@ -288,6 +271,7 @@
           DISPLAY 'Consulter autre role utilisateur ? 1 : oui, 0 : non'
           ACCEPT Wrep
          END-PERFORM
+        END-START
        END-PERFORM
        CLOSE futilisateurs
        DISPLAY '================================'.
