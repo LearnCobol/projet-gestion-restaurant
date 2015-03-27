@@ -1,4 +1,8 @@
-     ********************RECHERCHER_NUM_CLIENT****************   
+      ********************RECHERCHER_NUM_CLIENT*******************
+      *Parcours le fichier client pour rechercher l'identifiant  *
+      *dipsonible pour un nouvel enregistrementn permet          *
+      * l'auto-incrémentation de l'indentifiant du client        *
+      ************************************************************
        RECHERCHER_NUM_CLIENT.
        OPEN INPUT fclients
        IF fc_stat = 41 THEN
@@ -21,7 +25,7 @@
          END-READ
        END-PERFORM.
        
-     ****************AJOUTER_CLIENT***************************
+      ****************AJOUTER_CLIENT***************************
        AJOUTER_CLIENT.
        OPEN I-O fclients
        IF fc_stat = 35 THEN
@@ -59,7 +63,9 @@
          END-PERFORM
        END-PERFORM
        CLOSE fclients.
-     ********************AFFICHER_CLIENT**********************
+      ********************AFFICHER_CLIENT**********************
+      *Affiche tous les attributs d'un client                 *
+      *********************************************************
        AFFICHER_CLIENT.
        MULTIPLY 100 BY fc_pctReduc GIVING WpctReduc
        DISPLAY 'Identifiant :', fc_id
@@ -73,7 +79,10 @@
        DISPLAY fc_codeP
        DISPLAY fc_ville. 
 
-     ***********************CONSULTER_CLIENT********************
+      ***********************CONSULTER_CLIENT********************
+      *Consulter la liste des clients en fonction d'un nom de la*
+      *ville ou directement de l'identifiant                    *
+      *********************************************************** 
        CONSULTER_CLIENT.
        OPEN INPUT fclients
        MOVE 0 TO Wchoix
@@ -142,7 +151,9 @@
        END-EVALUATE
        CLOSE fclients.
 
-     *****************MODIFIER_CLIENT****************************
+      *****************MODIFIER_CLIENT****************************
+      *Permet de modifier toutes les informations d'un client    *
+      ************************************************************
       
        MODIFIER_CLIENT.
        OPEN I-O fclients
@@ -230,7 +241,10 @@
        END-IF
        CLOSE fclients.
 
-     ****************SUPPRIMER_CLIENT******************************
+      ****************SUPPRIMER_CLIENT******************************
+      *Possibilité de supprimer un client uniquement si il n'a pas *
+      *fait de réservation                                         *
+      **************************************************************
        SUPPRIMER_CLIENT.
        OPEN I-O fclients
        OPEN INPUT freservations
@@ -283,8 +297,10 @@
        CLOSE fclients
        CLOSE freservations.
 
-     ****************CALCULER_PRCT_REDUC***************************
-
+      ****************CALCULER_PRCT_REDUC***************************
+      *Calcul le nombre de réservation réalisé par chacun des      *
+      *en parcourant le fichier client et le fichier réservation   *
+      **************************************************************
        CALCULER_PRCT_REDUC.
        OPEN INPUT freservations
        OPEN I-O fclients
@@ -292,8 +308,7 @@
        PERFORM WITH TEST AFTER UNTIL Wfin = 1
          READ fclients NEXT
          AT END MOVE 1 TO Wfin
-         NOT AT END           
-           DISPLAY 'test'
+         NOT AT END     
            MOVE 0 TO fc_nbReserv
            MOVE fc_id TO frs_idCli
            MOVE fc_id TO WidCliSauv           

@@ -1,9 +1,11 @@
+      ************* RECHERCHER_NUM_RESTAURANT **************
+      * Retourner le premier identifiant disponible pour
+      * un restaurant dans le fichier frestaurants. 
+      * Fonction utilisée pour l'auto incrémentation
+      ******************************************************   
        RECHERCHER_NUM_RESTAURANT.
-       OPEN INPUT frestaurants
-       IF fr_stat = 41 THEN
-         CLOSE frestaurants
-         OPEN I-O frestaurants 
-       END-IF
+       CLOSE frestaurants
+       OPEN I-O frestaurants 
        MOVE 0 TO Wnum
        MOVE 0 TO Wfin
        PERFORM WITH TEST AFTER UNTIL Wfin = 1
@@ -19,8 +21,14 @@
          END-IF
          END-READ
        END-PERFORM.
-	  
+
+      **************** AJOUTER_RESTAURANT ******************
+      * Ajouter un restaurant dans le fichier frestaurant
+      * Saisir la rue, ville, le numéro, la capacité, 
+      * le site web et préciser si le restaurant est actif
+      ******************************************************  
        AJOUTER_RESTAURANT.
+       OPEN I-O frestaurants
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         DISPLAY 'Donnez les informations sur le nouveau restaurant'
         PERFORM RECHERCHER_NUM_RESTAURANT
@@ -47,9 +55,9 @@
         MOVE WnbPlaces TO fr_nbPlaces
         DISPLAY 'Site web du restaurant :'
         ACCEPT fr_sweb
-        PERFORM WITH TEST AFTER UNTIL Wactif = 2 OR Wactif = 1
+        PERFORM WITH TEST AFTER UNTIL Wactif = 1 OR Wactif = 2
           DISPLAY 'Le restaurant est-il actif ? '
-          DISPLAY '(2 : oui ; 1 : non) :'
+          DISPLAY '(1 : oui ; 2 : non) :'
           ACCEPT Wactif
         END-PERFORM
         MOVE Wactif TO fr_actif
@@ -59,17 +67,23 @@
           DISPLAY "Echec de l'insertion"
           NOT INVALID KEY 
           DISPLAY'Insertion OK'
-        DISPLAY 'Souhaitez-vous enregistrer un nouveau restaurant ?'
-          DISPLAY '0 : non, 1 : oui'
-          ACCEPT Wrep
         PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
+        DISPLAY 'Souhaitez-vous enregistrer un nouveau restaurant ?'
+          DISPLAY '1 : OUI, 0 : NON'
+          ACCEPT Wrep
         END-PERFORM
-        END-PERFORM.
-		
-       CONSULTER_RESTAURANT.
-	   
-              PERFORM WITH TEST AFTER UNTIL Wrep = 0
-              OPEN INPUT frestaurants
+        END-PERFORM
+        CLOSE frestaurants.
+	
+      *************** CONSULTER_RESTAURANT ******************
+      * Donner la possibilité à l'utilisateur d'afficher l'ensemble
+      * des informations des restaurants de la base ou de rechercher
+      * et d'afficher les informations d'un ( ou des ) restaurant(s)
+      * en fonction de son id ou de sa ville
+      ****************************************************** 
+       CONSULTER_RESTAURANT.	   
+       PERFORM WITH TEST AFTER UNTIL Wrep = 0
+       OPEN INPUT frestaurants
         MOVE 0 TO Wchoix
         PERFORM WITH TEST AFTER UNTIL Wchoix <= 4 AND Wchoix > 0
          DISPLAY 'Que souhaitez vous faire ?'
@@ -113,23 +127,26 @@
                 AT END MOVE 1 TO Wfin
                 NOT AT END
                 IF Wville = fr_ville THEN
-                            MOVE 1 to WvilleOK
+                  MOVE 1 to WvilleOK
                   PERFORM AFFICHER_RESTAURANT
                 END-IF
               END-READ
             END-PERFORM
         END-EVALUATE
         CLOSE frestaurants
+        PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
               DISPLAY 'Nouvelle recherche ?'
               DISPLAY '1 : OUI, 0 : NON'
         ACCEPT Wrep
-        PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
-              END-PERFORM
-              CLOSE frestaurants
+        END-PERFORM
+        CLOSE frestaurants
        END-PERFORM.
 	   
-	   
-              AFFICHER_RESTAURANT.
+      *************** AFFICHER_RESTAURANT ******************
+      * Afficher toutes les informations du restaurant 
+      * correspondant à l'identifiant entré dans le tampon
+      ******************************************************	   
+       AFFICHER_RESTAURANT.
        DISPLAY '******* Identifiant :', fr_id,'*******'
               DISPLAY 'Localisation du restaurant :'
        DISPLAY '  Rue: 'fr_rue
@@ -138,16 +155,24 @@
        DISPLAY 'Numero de telephone : ',fr_tel
        DISPLAY 'Capacite d accueil : ',fr_nbPlaces
        DISPLAY 'Site web : ',fr_sweb
-              IF fr_actif=0 THEN
+        IF fr_actif=1 THEN
          DISPLAY 'Restaurant actif : NON'
-           ELSE
-            DISPLAY 'Restaurant actif : OUI'
-         END-IF
-         DISPLAY '********************************'
-         DISPLAY ' '.
+        ELSE
+         DISPLAY 'Restaurant actif : OUI'
+        END-IF
+        DISPLAY '********************************'
+        DISPLAY ' '.
 
 	   
-	   
+      *************** MODIFIER_RESTAURANT ******************
+      * Modifier les informations d'un restaurant de frestaurants
+      * Pour séléctionner le restaurant à modifier
+      * il faut saisir son identifiant
+      * Si un champ n'a pas besoin d'être resaisi, alors il
+      * suffit d'appuyer sur entrée
+      * Si l'id du restaurant saisi n'existe pas, alors un
+      * message d'erreur est affiché
+      ******************************************************	   
        MODIFIER_RESTAURANT.
        OPEN I-O frestaurants
        MOVE 0 TO Wfin
@@ -191,7 +216,7 @@
        ACCEPT WsWeb 
        PERFORM WITH TEST AFTER UNTIL Wactif <= 2 
         DISPLAY 'Le restaurant est-il actif ? '
-        DISPLAY '(2 : oui ; 1 : non) :'
+        DISPLAY '(1 : oui ; 2 : non) :'
         ACCEPT Wactif
        END-PERFORM   
        IF Wville NOT EQUALS SPACE
@@ -218,7 +243,14 @@
        REWRITE restTampon
        CLOSE frestaurants.
 	   
-	   
+      **************** SUPPRIMER_RESTAURANT ****************
+      * Supprimer un restaurant
+      * Saisir l'identifiant
+      * Si l'id du restaurant n'existe pas, alors on quitte la
+      * fonction
+      * Sinon on demande une confirmation à l'utilisateur
+      * et on supprime
+      ******************************************************	   
        SUPPRIMER_RESTAURANT.
        OPEN I-O frestaurants
        MOVE 0 TO Wfin
