@@ -22,6 +22,8 @@
          END-READ
        END-PERFORM.
 
+
+
       **************** AJOUTER_RESTAURANT ******************
       * Ajouter un restaurant dans le fichier frestaurant
       * Saisir la rue, ville, le numéro, la capacité, 
@@ -29,6 +31,14 @@
       ******************************************************  
        AJOUTER_RESTAURANT.
        OPEN I-O frestaurants
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== AJOUT        ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|===========   RESTAURANT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         DISPLAY 'Donnez les informations sur le nouveau restaurant'
         PERFORM RECHERCHER_NUM_RESTAURANT
@@ -75,13 +85,23 @@
         END-PERFORM
         CLOSE frestaurants.
 	
+
+
       *************** CONSULTER_RESTAURANT ******************
       * Donner la possibilité à l'utilisateur d'afficher l'ensemble
       * des informations des restaurants de la base ou de rechercher
       * et d'afficher les informations d'un ( ou des ) restaurant(s)
       * en fonction de son id ou de sa ville
       ****************************************************** 
-       CONSULTER_RESTAURANT.	   
+       CONSULTER_RESTAURANT.
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|===========   RESTAURANT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
        OPEN INPUT frestaurants
         MOVE 0 TO Wchoix
@@ -141,6 +161,8 @@
         END-PERFORM
         CLOSE frestaurants
        END-PERFORM.
+
+
 	   
       *************** AFFICHER_RESTAURANT ******************
       * Afficher toutes les informations du restaurant 
@@ -175,6 +197,14 @@
       ******************************************************	   
        MODIFIER_RESTAURANT.
        OPEN I-O frestaurants
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MODIFICATION ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|===========   RESTAURANT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        MOVE 0 TO Wfin
        DISPLAY 'Id du restaurant a modifier'
        ACCEPT WidResto
@@ -243,6 +273,8 @@
        REWRITE restTampon
        CLOSE frestaurants.
 	   
+
+
       **************** SUPPRIMER_RESTAURANT ****************
       * Supprimer un restaurant
       * Saisir l'identifiant
@@ -253,6 +285,14 @@
       ******************************************************	   
        SUPPRIMER_RESTAURANT.
        OPEN I-O frestaurants
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== SUPPRESSION  ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|===========   RESTAURANT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        MOVE 0 TO Wfin
        DISPLAY 'Donnez l identifiant du restaurant'
        ACCEPT fr_id

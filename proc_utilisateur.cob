@@ -36,11 +36,14 @@
        AJOUTER_UTILISATEUR.
 
        OPEN I-O futilisateurs
-       DISPLAY '================================'
-       DISPLAY '========= AJOUT       =========='
-       DISPLAY '========= D UN        =========='
-       DISPLAY '========= UTILISATEUR =========='
-       DISPLAY '================================'
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== AJOUT        ===========|'
+       DISPLAY '|===========  D''UN        ===========|'
+       DISPLAY '|===========  UTILISATEUR ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
 
        MOVE 1 TO Wrep
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
@@ -89,11 +92,14 @@
        MODIFIER_UTILISATEUR.
 
        OPEN I-O futilisateurs
-       DISPLAY '================================'
-       DISPLAY '======== MODIFICATION  ========='
-       DISPLAY '======== D UN          ========='
-       DISPLAY '======== UTILISATEUR   ========='
-       DISPLAY '================================'
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MODIFICATION ===========|'
+       DISPLAY '|===========  D''UN        ===========|'
+       DISPLAY '|===========  UTILISATEUR ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
 
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         DISPLAY 'Donnez le pseudo de l''utilisateur :'
@@ -167,11 +173,14 @@
        SUPPRIMER_UTILISATEUR.
 
        OPEN I-O futilisateurs
-       DISPLAY '================================'
-       DISPLAY '======== SUPPRESSION   ========='
-       DISPLAY '======== D UN          ========='
-       DISPLAY '======== UTILISATEUR   ========='
-       DISPLAY '================================'
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== SUPPRESSION  ===========|'
+       DISPLAY '|===========  D''UN        ===========|'
+       DISPLAY '|===========  UTILISATEUR ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
 
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         DISPLAY 'Donnez le pseudo de l''utilisateur :'
@@ -223,12 +232,15 @@
        CONSULTER_UTILISATEUR_ROLE.
 
        OPEN INPUT futilisateurs
-       DISPLAY '================================'
-       DISPLAY '======== CONSULTATION  ========='
-       DISPLAY '======== DES           ========='
-       DISPLAY '======== UTILISATEURS  ========='
-       DISPLAY '======== PAR ROLE      ========='
-       DISPLAY '================================'
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========  D''UN        ===========|'
+       DISPLAY '|===========  UTILISATEUR ===========|'
+       DISPLAY '|=========== PAR ROLE     ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
 
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
         MOVE 0 TO Wfin
@@ -285,11 +297,14 @@
        CONSULTER_UTILISATEUR_TOUT.
 
        OPEN INPUT futilisateurs
-       DISPLAY '================================'
-       DISPLAY '======== CONSULTATION  ========='
-       DISPLAY '======== DE TOUS LES   ========='
-       DISPLAY '======== UTILISATEURS  ========='
-       DISPLAY '================================'
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========  DES         ===========|'
+       DISPLAY '|=========== UTILISATEURS ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
 
        DISPLAY 'Tous les utilisateurs'
        MOVE 0 TO Wfin
@@ -298,7 +313,7 @@
         AT END
          MOVE 1 TO Wfin
         NOT AT END
-         DISPLAY '================================'
+         DISPLAY '--------------------------------------'
          DISPLAY 'ID : ', fu_id
          DISPLAY 'Pseudo : ',fu_pseudo
          DISPLAY 'Mdp : ',fu_mdp

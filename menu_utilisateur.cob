@@ -5,11 +5,12 @@
       *************************************************************
        OPERATION_UTILISATEUR.
 
-       DISPLAY '================================'
-       DISPLAY '========= MENU         ========='
-       DISPLAY '========= GESTION      ========='
-       DISPLAY '========= UTILISATEUR  ========='
-       DISPLAY '================================'
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MENU         ===========|'
+       DISPLAY '|=========== GESTION      ===========|'
+       DISPLAY '|=========== UTILISATEUR  ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=5
@@ -20,7 +21,8 @@
          DISPLAY ' 4 - Consulter les utilisateurs pour un role' 
          DISPLAY ' 5 - Consulter tous les utilisateurs'      
          DISPLAY ' 0 - Quitter'
-         DISPLAY '================================'
+         DISPLAY ' '
+         DISPLAY '-====================================-'
          ACCEPT Wmenu
         END-PERFORM
         EVALUATE Wmenu

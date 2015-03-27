@@ -4,13 +4,14 @@
       ******************************************************
        AJOUTER_PLAT.
        OPEN I-O fplats
-        
-        DISPLAY '=============================='
-        DISPLAY '======== AJOUT       ========='
-        DISPLAY '========    D UN     ========='
-        DISPLAY '========      PLAT   ========='
-        DISPLAY '=============================='
-       
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== AJOUT        ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       PLAT   ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
         PERFORM WITH TEST AFTER UNTIL Wrep = 0
          DISPLAY 'Donnez les informations du plat'
          DISPLAY 'Nom du plat: '
@@ -68,6 +69,14 @@
       ******************************************************
        MODIFIER_PLAT.
         OPEN I-O fplats
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MODIFICATION ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       PLAT   ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
         
         MOVE 0 TO Wfin
         PERFORM WITH TEST AFTER UNTIL Wrep = 0
@@ -151,6 +160,14 @@
        SUPPRIMER_PLAT.
  
         OPEN I-O fplats
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== SUPPRESSION  ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       PLAT   ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        
         MOVE 0 TO Wfin
         DISPLAY 'Donnez un nom de plat'
@@ -231,6 +248,14 @@
       ******************************************************
        CONSULTER_PLAT_BUDGET.
 
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       PLAT   ===========|'
+       DISPLAY '|===========  PAR BUDGET  ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
         OPEN INPUT fplats
 
         DISPLAY 'Saisir votre budget maximum :'
@@ -260,6 +285,15 @@
        CONSULTER_PLAT_TYPE.
 
         OPEN INPUT fplats
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       PLAT   ===========|'
+       DISPLAY '|===========  PAR TYPE    ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
     
         MOVE 0 TO Wfin
         PERFORM WITH TEST AFTER UNTIL Wrep = 0
@@ -318,6 +352,14 @@
        CONSULTER_PLAT_TOUT.
 
         OPEN INPUT fplats
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       PLAT   ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
 
         DISPLAY 'Tous les plats'
 

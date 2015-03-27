@@ -1,10 +1,11 @@
          OPERATION_CLIENT.
 
-       DISPLAY '================================'
-       DISPLAY '========= MENU        =========='
-       DISPLAY '========= GESTION     =========='
-       DISPLAY '========= CLIENT      =========='
-       DISPLAY '================================'
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MENU        ============|'
+       DISPLAY '|=========== GESTION     ============|'
+       DISPLAY '|=========== CLIENT      ============|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu >= 0 AND Wmenu<=5
@@ -15,7 +16,8 @@
          DISPLAY ' 4 - Supprimer un client'
          DISPLAY ' 5 - Calculer pourcentage de réduction'
          DISPLAY ' 0 - Quitter'
-         DISPLAY '================================'
+         DISPLAY ' '
+         DISPLAY '-====================================-'
          ACCEPT Wmenu
          EVALUATE Wmenu
            WHEN 1

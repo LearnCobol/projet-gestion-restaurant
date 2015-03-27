@@ -1,10 +1,11 @@
          OPERATION_PLAT.
 
-       DISPLAY '================================'
-       DISPLAY '========= MENU         ========='
-       DISPLAY '========= GESTION      ========='
-       DISPLAY '========= PLAT         ========='
-       DISPLAY '================================'
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MENU         ===========|'
+       DISPLAY '|=========== GESTION      ===========|'
+       DISPLAY '|=========== PLAT         ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=6
@@ -16,7 +17,7 @@
          DISPLAY ' 5 - Consulter les plats pour un type'        
          DISPLAY ' 6 - Consulter tous les plats'
          DISPLAY ' 0 - Quitter'
-         DISPLAY '================================'
+         DISPLAY '-====================================-'
          ACCEPT Wmenu
         END-PERFORM
         EVALUATE Wmenu
@@ -39,11 +40,12 @@
       ****************************************************************
          OPERATION_PLAT_UTIL.
 
-       DISPLAY '================================'
-       DISPLAY '========= MENU         ========='
-       DISPLAY '========= CONSULTATION ========='
-       DISPLAY '========= PLAT         ========='
-       DISPLAY '================================'
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MENU         ===========|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|=========== PLAT         ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=3
@@ -52,7 +54,8 @@
          DISPLAY ' 2 - Consulter les plats pour un type'        
          DISPLAY ' 3 - Consulter tous les plats'
          DISPLAY ' 0 - Quitter'
-         DISPLAY '================================'
+         DISPLAY ' '
+         DISPLAY '-====================================-'
          ACCEPT Wmenu
         END-PERFORM
         EVALUATE Wmenu

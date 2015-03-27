@@ -1,10 +1,11 @@
        OPERATION_MENU.
 
-       DISPLAY '================================'
-       DISPLAY '========= MENU         ========='
-       DISPLAY '========= GESTION      ========='
-       DISPLAY '========= MENU         ========='
-       DISPLAY '================================'
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MENU         ===========|'
+       DISPLAY '|=========== GESTION      ===========|'
+       DISPLAY '|=========== MENU         ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=5
@@ -15,7 +16,8 @@
          DISPLAY ' 4 - Supprimer un menu'
          DISPLAY ' 5 - Consulter les menus pour un budget'
          DISPLAY ' 0 - Quitter'
-         DISPLAY '================================'
+         DISPLAY ' '
+         DISPLAY '-====================================-'
          ACCEPT Wmenu
         END-PERFORM
         EVALUATE Wmenu
@@ -36,11 +38,12 @@
       ****************************************************************
        OPERATION_MENU_UTIL.
 
-       DISPLAY '================================'
-       DISPLAY '========= MENU         ========='
-       DISPLAY '========= CONSULTATION ========='
-       DISPLAY '========= MENU         ========='
-       DISPLAY '================================'
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MENU         ===========|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|=========== MENU         ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=2
@@ -48,7 +51,8 @@
          DISPLAY ' 1 - Consulter un menu'
          DISPLAY ' 2 - Consulter les menus pour un budget'
          DISPLAY ' 0 - Quitter'
-         DISPLAY '================================'
+         DISPLAY ' '
+         DISPLAY '-================================-'
          ACCEPT Wmenu
         END-PERFORM
         EVALUATE Wmenu

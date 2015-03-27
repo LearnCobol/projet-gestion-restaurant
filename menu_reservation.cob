@@ -1,10 +1,11 @@
          OPERATION_RESERVATION.
  
-       DISPLAY '================================'
-       DISPLAY '========= MENU         ========='
-       DISPLAY '========= GESTION      ========='
-       DISPLAY '========= RESERVATION  ========='
-       DISPLAY '================================'
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MENU         ===========|'
+       DISPLAY '|=========== GESTION      ===========|'
+       DISPLAY '|=========== RESERVATION  ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu = 0 AND Wmenu<=6
@@ -16,7 +17,8 @@
          DISPLAY ' 5 - Consulter les statistiques de ventes'
          DISPLAY ' 6 - Supprimer une réservation'
          DISPLAY ' 0 - Quitter'
-         DISPLAY '================================'
+         DISPLAY ' '
+         DISPLAY '-====================================-'
          ACCEPT Wmenu
          EVALUATE Wmenu
           WHEN 1

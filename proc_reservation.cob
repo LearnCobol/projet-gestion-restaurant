@@ -20,12 +20,23 @@
          END-IF
          END-READ
        END-PERFORM.
+
+
+
       **********RECHERCHER CLIENT************************************
       *Rechercher un client à partir de son nom puis taper son      *
       *identifiant parcours le fichier client par nom               *
       ***************************************************************
        RECHERCHER_CLIENT.
        OPEN INPUT fclients
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== RECHERCHE    ===========|'
+       DISPLAY '|===========     D''UN     ===========|'
+       DISPLAY '|===========       CLIENT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        MOVE 0 TO WvaleurOK
        
        MOVE 0 TO Wfin
@@ -60,6 +71,9 @@
          MOVE 1 TO WvaleurOK
        END-PERFORM
        CLOSE fclients.
+
+
+
       **********RECHERCHER RESTAURANT********************************
       *Demande un nom de ville  à l'utilisateur et affiche          *
       *tous les restaurants présent dans cette ville                *
@@ -67,6 +81,14 @@
       ***************************************************************
        RECHERCHER_RESTAURANT.
        OPEN INPUT frestaurants
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== RECHERCHE    ===========|'
+       DISPLAY '|===========   D''UN       ===========|'
+       DISPLAY '|===========   RESTAURANT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        MOVE 0 TO Wfin
        MOVE 0 TO WvaleurOK
        
@@ -99,6 +121,11 @@
          MOVE fr_nbPlaces TO WcapaciteRestaurant
        END-PERFORM
        CLOSE frestaurants.
+
+
+
+
+
       ****************CALCUL NB PLACES REST **************************
       *Calcul le nombre de place restante dans un restaurant en      *
       *En cherchant toutes les réservations se déroulant sur la      *
@@ -141,9 +168,20 @@
       -' restaurant'
          END-IF.
                      
+
+
+
      **********************NOUVELLE RESERVATION *********************
        AJOUTER_RESA.       
        OPEN I-O freservations
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== AJOUT        ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|===========  RESERVATION ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
          DISPLAY 'Donnez les informations de la réservation'
          PERFORM RECHERCHER_NUM_RESA
@@ -233,12 +271,17 @@
          END-PERFORM
        END-PERFORM
        CLOSE freservations.
+
+
+
+
       ***********AFFICHER RESERVATION ********************************
       *Affiche tous les attributs d'une réservation avec les détails *
       *du client et du restaurants                                   *
       ****************************************************************     
        AFFICHER_RESA.
        OPEN INPUT fclients
+
        MOVE frs_idCli TO fc_id
        READ fclients
        INVALID KEY DISPLAY 'Client inexistant'
@@ -260,12 +303,24 @@
        DISPLAY 'Nombre de personne: ', frs_nbPersonnes
        DISPLAY 'Prix Payé: ', frs_prix.
 
+
+
+
+
       *************CONSULTER RESERVATIONS ***************************
       *Propose de consulter les réservation en fontion de la date,  *
       *du client, du restaurant ou de l'identitifant                *
       ***************************************************************
        CONSULTER_RESA.
        OPEN INPUT freservations
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|===========  RESERVATION ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        MOVE 0 TO Wchoix
        PERFORM WITH TEST AFTER UNTIL Wchoix <= 4 AND Wchoix > 0
         DISPLAY 'Que souhaitez vous faire ?'
@@ -337,11 +392,25 @@
        END-EVALUATE
        CLOSE freservations.
 
+
+
+
+
+
+
       *************MODIFIER RESERVATION ******************************
       *Permet de modifier la date et l'heure d'une réservation       *
       ****************************************************************
        MODIFIER_RESA.
        OPEN I-O freservations
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MODIFICATION ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|===========  RESERVATION ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        MOVE 0 TO Wchoix
        PERFORM WITH TEST AFTER UNTIL Wchoix <= 4 AND Wchoix > 0
          DISPLAY 'Pour la modification, souhaitez vous:'
@@ -528,6 +597,10 @@
         END-PERFORM
        CLOSE freservations.
 
+
+
+
+
       ***************STATISTIQUES_RESTAURANT************************
       *Affiche le chiffre d'affaire du restaurant pour un mois     *
       *donné, affiche aussi celui de l'année précédente            *
@@ -535,6 +608,14 @@
        STATISTIQUES_RESTAURANT.
 		
         OPEN INPUT frestaurants
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== STATISTIQUE  ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|===========  RESTAURANT  ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
 		
         DISPLAY 'Saisir le nom de la ville :'
         ACCEPT fr_ville
@@ -628,6 +709,7 @@
         CLOSE frestaurants.
 
 
+
       *********************SAISIR_COMMANDE*********************
       *Permet de saisir les commandes prise par les clients   *
       *après leur passage au restaurants                      *
@@ -637,6 +719,14 @@
        SAISIR_COMMANDE.
 
        OPEN I-O freservations
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== SAISIE       ===========|'
+       DISPLAY '|===========   DE         ===========|'
+       DISPLAY '|===========    COMMANDE  ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        MOVE 0 TO Wfin
        DISPLAY 'Donnez l identifiant de la reservation'
        ACCEPT frs_id
@@ -702,12 +792,23 @@
          END-IF  
          END-READ
        CLOSE freservations.
+
+
+
        
       **********************SUPPRIMER_RESERVATION*********************
       *Supprime la réservation uniquement si elle n'a pas été payée  *
       ****************************************************************   
        SUPPRIMER_RESERVATION.
        OPEN I-O freservations
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== SUPPRESSION  ===========|'
+       DISPLAY '|===========  DE          ===========|'
+       DISPLAY '|=========== RESERVATION  ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        MOVE 0 TO Wfin
        DISPLAY 'Donnez l identifiant de la reservation'
        ACCEPT frs_id

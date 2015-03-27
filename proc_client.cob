@@ -27,6 +27,14 @@
        
       ****************AJOUTER_CLIENT***************************
        AJOUTER_CLIENT.
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== AJOUT        ===========|'
+       DISPLAY '|===========    D''UN      ===========|'
+       DISPLAY '|===========       CLIENT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        OPEN I-O fclients
        IF fc_stat = 35 THEN
          OPEN OUTPUT fclients
@@ -62,11 +70,16 @@
           ACCEPT Wrep
          END-PERFORM
        END-PERFORM
+       DISPLAY '|====================================|'
        CLOSE fclients.
       ********************AFFICHER_CLIENT**********************
       *Affiche tous les attributs d'un client                 *
       *********************************************************
        AFFICHER_CLIENT.
+
+       DISPLAY '--------------------------------------'
+       DISPLAY ' '
+
        MULTIPLY 100 BY fc_pctReduc GIVING WpctReduc
        DISPLAY 'Identifiant :', fc_id
        DISPLAY 'Nombre de réservation:'fc_nbReserv,
@@ -84,6 +97,14 @@
       *ville ou directement de l'identifiant                    *
       *********************************************************** 
        CONSULTER_CLIENT.
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       CLIENT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        OPEN INPUT fclients
        MOVE 0 TO Wchoix
        PERFORM WITH TEST AFTER UNTIL Wchoix <= 4 AND Wchoix > 0
@@ -93,6 +114,8 @@
         DISPLAY '3 - Faire une recherche à partir dune ville'
         DISPLAY '4 - voir les coordonnées d''un client à partir'
       -  ' de son id'
+        DISPLAY ' '
+        DISPLAY '|====================================|'
         ACCEPT Wchoix
        END-PERFORM
        EVALUATE Wchoix
@@ -106,12 +129,15 @@
           END-PERFORM 
          WHEN 2
            MOVE 0 TO Wfin
+           DISPLAY ' '
            DISPLAY 'Donnez un nom de client'
            ACCEPT WnomCli
            MOVE WnomCli TO fc_nom
            START fclients, KEY IS = fc_nom
-           INVALID KEY 
+           INVALID KEY
+           DISPLAY ' '
            DISPLAY 'Aucun client ne porte ce nom'
+           DISPLAY ' '
            NOT INVALID KEY
             PERFORM WITH TEST AFTER UNTIL Wfin = 1
               READ fclients NEXT
@@ -124,12 +150,15 @@
             END-PERFORM
          WHEN 3
            MOVE 0 TO Wfin
+           DISPLAY ' '
            DISPLAY 'Donnez la ville que vous souhaitez consulter'
            ACCEPT WvilleCli
            MOVE WvilleCli TO fc_ville
            START fclients, KEY IS = fc_ville
            INVALID KEY 
+           DISPLAY ' '
            DISPLAY 'Aucun client n''habite dans cette ville'
+           DISPLAY ' '
            NOT INVALID KEY
             PERFORM WITH TEST AFTER UNTIL Wfin = 1
               READ fclients NEXT
@@ -141,13 +170,18 @@
               END-READ
             END-PERFORM
          WHEN 4
+           DISPLAY ' '
            DISPLAY 'Donnez lidentifiant du client'
            ACCEPT fc_id
            READ fclients
-           INVALID KEY DISPLAY 'Aucun client ne possède ' 
-      -    'cet identifiant'
+           INVALID KEY
+            DISPLAY ' '
+            DISPLAY 'Aucun client ne possède ' 
+      -     'cet identifiant'
+            DISPLAY ' '
            NOT INVALID KEY 
-           PERFORM AFFICHER_CLIENT           
+            PERFORM AFFICHER_CLIENT
+        DISPLAY '|====================================|'
        END-EVALUATE
        CLOSE fclients.
 
@@ -156,6 +190,14 @@
       ************************************************************
       
        MODIFIER_CLIENT.
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MODIFICATION ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       CLIENT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        OPEN I-O fclients
        MOVE 0 TO Wfin
        DISPLAY 'Donnez un nom de client'
@@ -246,6 +288,14 @@
       *fait de réservation                                         *
       **************************************************************
        SUPPRIMER_CLIENT.
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== SUPPRESSION  ===========|'
+       DISPLAY '|===========     DE       ===========|'
+       DISPLAY '|===========       CLIENT ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        OPEN I-O fclients
        OPEN INPUT freservations
        MOVE 0 TO Wfin
@@ -302,6 +352,7 @@
       *en parcourant le fichier client et le fichier réservation   *
       **************************************************************
        CALCULER_PRCT_REDUC.
+
        OPEN INPUT freservations
        OPEN I-O fclients
        MOVE 0 TO Wfin
@@ -345,11 +396,15 @@
           REWRITE cliTampon
           END-REWRITE
           IF fc_stat NOT = 0 THEN
-            DISPLAY 'Erreur lors de l''insertion du client numéro',
+           DISPLAY ' '
+           DISPLAY 'Erreur lors de l''insertion du client numéro',
      - fc_id 
+           DISPLAY ' '
           END-IF
        END-PERFORM
+       DISPLAY ' '
        DISPLAY 'Les clients ont été mis à jour'
+       DISPLAY ' '
        CLOSE freservations
        CLOSE fclients.
            

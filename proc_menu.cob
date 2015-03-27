@@ -6,18 +6,17 @@
       * saisir à nouveau
       ******************************************************
        AJOUTER_MENU.
-        DISPLAY '=============================='
-        DISPLAY '======== AJOUT       ========='
-        DISPLAY '========    D UN     ========='
-        DISPLAY '========      MENU   ========='
-        DISPLAY '=============================='
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== AJOUT        ===========|'
+       DISPLAY '|===========      DE      ===========|'
+       DISPLAY '|===========         MENU ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
         OPEN I-O fmenus
-
         MOVE 0 TO Wfin
-
         PERFORM WITH TEST AFTER UNTIL Wfin = 1
-         DISPLAY ' '
          DISPLAY 'Saisir le nom du menu :'
          ACCEPT fm_nom
          DISPLAY '==='
@@ -123,13 +122,14 @@
       * affichés
       ******************************************************
        CONSULTER_MENU.
-        DISPLAY '=============================='
-        DISPLAY '======== AFFICHAGE   ========='
-        DISPLAY '========    D UN     ========='
-        DISPLAY '========      MENU   ========='
-        DISPLAY '=============================='
 
-        DISPLAY ' '
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========      DE      ===========|'
+       DISPLAY '|===========         MENU ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
         DISPLAY 'Saisir le nom du menu à afficher :'
         ACCEPT fm_nom
         DISPLAY '==='
@@ -184,16 +184,16 @@
       * ne peut pas être supprimé
       ******************************************************
        SUPPRIMER_MENU.
-        
-        DISPLAY '=============================='
-        DISPLAY '======== SUPPRESSION ========='
-        DISPLAY '========    D UN     ========='
-        DISPLAY '========      MENU   ========='
-        DISPLAY '=============================='
-         
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== SUPPRESSION  ===========|'
+       DISPLAY '|===========      DE      ===========|'
+       DISPLAY '|===========         MENU ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
         OPEN I-O fmenus
         OPEN INPUT freservations
-        DISPLAY ' '
         DISPLAY 'Saisir le nom du menu à supprimer :'
         ACCEPT fm_nom
         DISPLAY '==='
@@ -258,11 +258,14 @@
       * s'affiche alors
       ******************************************************
        CONSULTER_MENU_BUDGET.
-        DISPLAY '=============================='
-        DISPLAY '======== CONSULTER   ========='
-        DISPLAY '========    UN       ========='
-        DISPLAY '========      MENU   ========='
-        DISPLAY '=============================='
+
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== CONSULTATION ===========|'
+       DISPLAY '|===========      DE      ===========|'
+       DISPLAY '|===========         MENU ===========|'
+       DISPLAY '|===========  PAR BUDGET  ===========|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
 
         OPEN INPUT fmenus
 
