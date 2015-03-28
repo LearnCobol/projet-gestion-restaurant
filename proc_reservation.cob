@@ -169,7 +169,10 @@
            DISPLAY 'Il ne reste que ',WPlacesLibres,' places dans ce'
       -' restaurant'
          END-IF.
-
+       
+      *******************NOMBRE_RESERVATION_JOUR***********************
+      *Compte le nombre de réservation pour une date et un client     *
+      *****************************************************************
        NOMBRE_RESERVATION_JOUR.
        MOVE 0 TO WnbReservCli
        MOVE 0 TO Wfin
@@ -223,8 +226,8 @@
                MOVE frs_date TO Wdate
                PERFORM NOMBRE_RESERVATION_JOUR
                IF WnbReservCli = 1 THEN
-                 DISPLAY 'Le client a déjà effectué 1 réservation '
-     -   'pour cette date '
+                 DISPLAY 'Le client a déjà effectué une réservation '
+      -   'pour cette date '
                  MOVE 0 TO Wlibre
                END-IF
                IF Wlibre NOT EQUAL 0 THEN
@@ -353,21 +356,10 @@
        END-PERFORM
        EVALUATE Wchoix
          WHEN 1
-         DISPLAY 'Veuillez saisir la date du jour:'
-         PERFORM WITH TEST AFTER UNTIL Wdate_jour <= 31 AND 
-     -  Wdate_jour >= 1
-           DISPLAY 'jour: (JJ)'
-           ACCEPT Wdate_jour
-         END-PERFORM
-         PERFORM WITH TEST AFTER UNTIL  Wdate_mois <= 12 AND
-     -  Wdate_mois >= 1
-           DISPLAY 'mois: (MM)'
-           ACCEPT Wdate_mois
-         END-PERFORM
-         PERFORM WITH TEST AFTER UNTIL  Wdate_annee >= 2015
-           DISPLAY 'annee: (AAAA)'
-           ACCEPT Wdate_annee
-         END-PERFORM
+          ACCEPT SYS-DATE8 FROM DATE YYYYMMDD
+          MOVE A4 TO Wdate_annee
+          MOVE JJ TO Wdate_jour
+          MOVE MM TO Wdate_mois
           MOVE 0 TO Wfin
           PERFORM WITH TEST AFTER UNTIL Wfin = 1
             READ freservations NEXT
@@ -435,6 +427,7 @@
        DISPLAY ' '
 
        MOVE 0 TO Wchoix
+       MOVE 1 TO Wlibre
        PERFORM WITH TEST AFTER UNTIL Wchoix <= 4 AND Wchoix > 0
          DISPLAY 'Pour la modification, souhaitez vous:'
          DISPLAY '1 - Rechercher une réservation à partir de sa date '
@@ -513,7 +506,6 @@
        MOVE frs_id TO WidSauv
        MOVE frs_idrest TO WidRestSauv
        MOVE frs_idCli TO WidCliSauv
-       PERFORM WITH TEST AFTER UNTIL Wlibre = 1
          DISPLAY 'Veuillez saisir la date de la réservation:'
            MOVE 0 TO Wdate_jour
            MOVE 0 TO Wdate_mois
@@ -535,6 +527,16 @@
              DISPLAY 'annee: (AAAA)'
              ACCEPT Wdate_annee
            END-PERFORM
+           IF Wdate_annee NOT EQUAL 0 AND Wdate_jour NOT EQUAL 0
+     - AND Wdate_mois NOT EQUAL 0 THEN
+             PERFORM NOMBRE_RESERVATION_JOUR
+             IF WnbReservCli = 1 THEN
+               DISPLAY 'Le client a déjà effectué une réservation '
+     -   'pour cette date '
+               MOVE 0 TO Wlibre
+             END-IF
+           END-IF
+         IF Wlibre NOT EQUAL 0 THEN
            DISPLAY 'Veuillez saisir l''heure de la réservation'
            PERFORM WITH TEST AFTER UNTIL  WheureSauv_heure <= 22 AND 
      -     WheureSauv_heure >= 12 OR WheureSauv_heure = 0
@@ -577,8 +579,7 @@
              SUBTRACT 1 FROM WheureMin_heure
              ADD 2 TO WheureMax_heure        
            END-IF
-             PERFORM NOMBRE_PLACE_RESTANTE 
-         END-PERFORM
+             PERFORM NOMBRE_PLACE_RESTANTE
          MOVE WidSauv TO frs_id
          MOVE WidrestSauv TO frs_idrest
          MOVE WidCliSauv TO frs_idcli
@@ -618,6 +619,7 @@
              ACCEPT Wlibre
           END-IF
         END-PERFORM
+       END-IF
        DISPLAY '-====================================-'
        CLOSE freservations.
 

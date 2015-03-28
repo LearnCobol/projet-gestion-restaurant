@@ -215,6 +215,13 @@
           77 Wrole PIC A(10).
           77 WinMenu PIC 9.
 
+          01 SYS-DATE8.
+            03 A4.
+              05 SS  PIC 99.
+              05 AA  PIC 99.
+           03 MM  PIC 99.
+           03 JJ    PIC 99.
+
   
 
         PROCEDURE DIVISION.
