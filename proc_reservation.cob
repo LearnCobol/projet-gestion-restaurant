@@ -169,11 +169,23 @@
            DISPLAY 'Il ne reste que ',WPlacesLibres,' places dans ce'
       -' restaurant'
          END-IF.
-                     
 
+       NOMBRE_RESERVATION_JOUR.
+       MOVE 0 TO WnbReservCli
+       MOVE 0 TO Wfin
+       MOVE WidCliSauv TO frs_idCli
+       START freservations, KEY IS = frs_idCli
+       NOT INVALID KEY
+         PERFORM WITH TEST AFTER UNTIL Wfin = 1
+           READ freservations NEXT
+           AT END MOVE 1 TO Wfin
+           NOT AT END     
+             IF frs_date = Wdate AND frs_idCli = WidCliSauv THEN
+               ADD 1 TO WnbReservCli
+             END-IF
+         END-PERFORM.
 
-
-     **********************NOUVELLE RESERVATION *********************
+      **********************NOUVELLE RESERVATION *********************
        AJOUTER_RESA.       
        OPEN I-O freservations
 
@@ -185,6 +197,7 @@
        DISPLAY ' '
 
        PERFORM WITH TEST AFTER UNTIL Wrep = 0
+         MOVE 1 TO Wlibre 
          DISPLAY 'Donnez les informations de la réservation'
          PERFORM RECHERCHER_NUM_RESA
          DISPLAY 'Numéro de la réservation:',Wnum
@@ -194,7 +207,6 @@
          IF WvaleurOK = 1 THEN
            PERFORM RECHERCHER_RESTAURANT
            IF WvaleurOK = 1 THEN
-             PERFORM WITH TEST AFTER UNTIL Wlibre = 1
                DISPLAY 'Veuillez saisir la date de la réservation:'
                PERFORM WITH TEST AFTER UNTIL frs_date_jour <= 31
                  DISPLAY 'jour: (JJ)'
@@ -209,6 +221,13 @@
                  ACCEPT frs_date_annee
                END-PERFORM
                MOVE frs_date TO Wdate
+               PERFORM NOMBRE_RESERVATION_JOUR
+               IF WnbReservCli = 1 THEN
+                 DISPLAY 'Le client a déjà effectué 1 réservation '
+     -   'pour cette date '
+                 MOVE 0 TO Wlibre
+               END-IF
+               IF Wlibre NOT EQUAL 0 THEN
                DISPLAY 'Veuillez saisir l heure de la réservation'
                PERFORM WITH TEST AFTER UNTIL  frs_heure_heure <= 22  
      -     AND frs_heure_heure >= 12
@@ -235,7 +254,6 @@
                  SUBTRACT 1 FROM WheureMin_heure
                  ADD 2 TO WheureMax_heure
                PERFORM NOMBRE_PLACE_RESTANTE
-             END-PERFORM
              MOVE WidSauv TO frs_id
              MOVE WidrestSauv TO frs_idrest
              MOVE WidCliSauv TO frs_idcli
@@ -263,7 +281,8 @@
            END-IF
           END-PERFORM
          END-IF
-        END-IF       
+        END-IF 
+        END-IF        
          
 
          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
