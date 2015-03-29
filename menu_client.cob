@@ -1,5 +1,12 @@
          OPERATION_CLIENT.
 
+       DISPLAY '|====================================|'
+       DISPLAY '|=========== MENU        ============|'
+       DISPLAY '|=========== GESTION     ============|'
+       DISPLAY '|=========== CLIENT      ============|'
+       DISPLAY '|====================================|'
+       DISPLAY ' '
+
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu >= 0 AND Wmenu<=5
          DISPLAY '*********************************'
@@ -11,7 +18,10 @@
          DISPLAY ' 2 - Consulter les clients'
          DISPLAY ' 3 - Modifier un client'
          DISPLAY ' 4 - Supprimer un client'
+         DISPLAY ' 5 - Calculer pourcentage de réduction'
          DISPLAY ' 0 - Quitter'
+         DISPLAY ' '
+         DISPLAY '-====================================-'
          ACCEPT Wmenu
          EVALUATE Wmenu
            WHEN 1
@@ -22,6 +32,8 @@
              PERFORM MODIFIER_CLIENT
            WHEN 4 
              PERFORM SUPPRIMER_CLIENT
+           WHEN 5 
+             PERFORM CALCULER_PRCT_REDUC
          END-EVALUATE
         END-PERFORM
        END-PERFORM.
