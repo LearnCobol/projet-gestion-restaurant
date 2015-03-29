@@ -227,7 +227,7 @@
                PERFORM NOMBRE_RESERVATION_JOUR
                IF WnbReservCli = 1 THEN
                  DISPLAY 'Le client a déjà effectué une réservation '
-      -   'pour cette date '
+     -    'pour cette date '
                  MOVE 0 TO Wlibre
                END-IF
                IF Wlibre NOT EQUAL 0 THEN
@@ -290,7 +290,7 @@
 
          PERFORM WITH TEST AFTER UNTIL Wrep = 0 OR Wrep = 1
           DISPLAY 'Souhaitez vous saisir une nouvelle réservation?' 
-      - '0 : non, 1 : oui'
+     - '0 : non, 1 : oui'
           ACCEPT Wrep
          END-PERFORM
        END-PERFORM
