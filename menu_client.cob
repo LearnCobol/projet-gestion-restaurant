@@ -2,6 +2,10 @@
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu >= 0 AND Wmenu<=5
+         DISPLAY '*********************************'
+         DISPLAY '************* MENU **************'
+         DISPLAY '******* OPERATION CLIENT ********'
+         DISPLAY '*********************************'
          DISPLAY 'Que souhaitez vous faire ?'
          DISPLAY ' 1 - Ajouter un client'
          DISPLAY ' 2 - Consulter les clients'

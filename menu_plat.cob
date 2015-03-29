@@ -3,6 +3,10 @@
 
          PERFORM WITH TEST AFTER UNTIL Wmenu = 0
           PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=6
+           DISPLAY '*********************************'
+           DISPLAY '************* MENU **************'
+           DISPLAY '******** OPERATION PLAT *********'
+           DISPLAY '*********************************'
            DISPLAY 'Que souhaitez vous faire ?'
            DISPLAY ' 1 - Ajouter un plat'
            DISPLAY ' 2 - Modifier un plat'
@@ -38,6 +42,10 @@
 
          PERFORM WITH TEST AFTER UNTIL Wmenu = 0
           PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=3
+           DISPLAY '*********************************'
+           DISPLAY '************* MENU **************'
+           DISPLAY '******** OPERATION PLAT *********'
+           DISPLAY '*********************************'
            DISPLAY 'Que souhaitez vous faire ?'
            DISPLAY ' 1 - Consulter les plats pour un budget'
            DISPLAY ' 2 - Consulter les plats pour un type'        

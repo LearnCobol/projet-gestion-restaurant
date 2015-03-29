@@ -327,15 +327,20 @@
             IF Wmdp = fu_mdp THEN
              MOVE fu_role TO Wrole
              IF Wrole = 'Directeur' THEN
+              DISPLAY '*********************************'
               DISPLAY 'Connexion réussi en tant que Directeur'
+              DISPLAY '*********************************'
               PERFORM MENU_PRINCIPAL_DIR
              ELSE IF Wrole = 'Gérant' THEN
+               DISPLAY '*********************************'
                DISPLAY 'Connexion réussi en tant que Gérant'
+               DISPLAY '*********************************'
                PERFORM MENU_PRINCIPAL_GER
               END-IF
              END-IF
              ELSE
                DISPLAY 'Mot de passe erroné'
+               DISPLAY '*********************************'
             END-IF             
            END-IF
           END-READ

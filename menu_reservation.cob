@@ -2,6 +2,10 @@
  
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu = 0 AND Wmenu<=6
+         DISPLAY '*********************************'
+         DISPLAY '************* MENU **************'
+         DISPLAY '***** OPERATION RESERVATION *****'
+         DISPLAY '*********************************'
          DISPLAY 'Que souhaitez vous faire ?'
          DISPLAY ' 1 - Ajouter une réservation'
          DISPLAY ' 2 - Modifier une réservation'

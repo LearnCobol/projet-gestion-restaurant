@@ -2,6 +2,10 @@
 
        PERFORM WITH TEST AFTER UNTIL Wmenu = 0
         PERFORM WITH TEST AFTER UNTIL Wmenu = 0 AND Wmenu<=4
+         DISPLAY '*********************************'
+         DISPLAY '************* MENU **************'
+         DISPLAY '***** OPERATION RESTAURANT ******'
+         DISPLAY '*********************************'
          DISPLAY 'Que souhaitez vous faire ?'
          DISPLAY ' 1 - Ajouter un restaurant'
          DISPLAY ' 2 - Consulter les informations d un restaurant'

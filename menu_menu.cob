@@ -3,6 +3,10 @@
 
          PERFORM WITH TEST AFTER UNTIL Wmenu = 0
           PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=5
+         DISPLAY '*********************************'
+         DISPLAY '************* MENU **************'
+         DISPLAY '******** OPERATION MENU *********'
+         DISPLAY '*********************************'
            DISPLAY 'Que souhaitez vous faire ?'
            DISPLAY ' 1 - Ajouter un menu'
            DISPLAY ' 2 - Consulter un menu'
