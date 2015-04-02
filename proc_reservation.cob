@@ -226,14 +226,14 @@
                MOVE frs_date TO Wdate
                PERFORM NOMBRE_RESERVATION_JOUR
                IF WnbReservCli = 1 THEN
-                 DISPLAY 'Le client a déjà effectué une réservation '
-     -    'pour cette date '
+                 DISPLAY 'Le client a déjà effectué une réservation'
+     -     ' pour cette date '
                  MOVE 0 TO Wlibre
                END-IF
                IF Wlibre NOT EQUAL 0 THEN
                DISPLAY 'Veuillez saisir l heure de la réservation'
                PERFORM WITH TEST AFTER UNTIL  frs_heure_heure <= 22  
-     -     AND frs_heure_heure >= 12
+     -      AND frs_heure_heure >= 12
                  DISPLAY 'heure: (24)'
                  ACCEPT frs_heure_heure             
                END-PERFORM

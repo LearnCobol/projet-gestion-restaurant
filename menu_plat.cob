@@ -16,7 +16,7 @@
          DISPLAY ' 4 - Consulter les plats pour un budget'
          DISPLAY ' 5 - Consulter les plats pour un type'        
          DISPLAY ' 6 - Consulter tous les plats'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY '-====================================-'
          ACCEPT Wmenu
         END-PERFORM
@@ -52,7 +52,7 @@
          DISPLAY ' 1 - Consulter les plats pour un budget'
          DISPLAY ' 2 - Consulter les plats pour un type'        
          DISPLAY ' 3 - Consulter tous les plats'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-====================================-'
          ACCEPT Wmenu

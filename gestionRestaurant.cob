@@ -222,7 +222,9 @@
          03 MM  PIC 99.
          03 JJ    PIC 99.
 
-  
+      *Tentative de colorer le terminal mais cela provoquait des problèmes
+      *SCREEN SECTION.
+      *  01 BLANK SCREEN BACKGROUND-COLOR 5 FOREGROUND-COLOR 7.
 
        PROCEDURE DIVISION.
 
@@ -282,7 +284,7 @@
          DISPLAY ' 2 - Non (Utilisateur anonyme)'
       *Pour un souci de rapiditer des tests et de démonstration de l'application
       *on propose ici un accès administrateur sans limite ni condition
-         DISPLAY ' 3 - Admin (demo)'
+         DISPLAY ' 3 - Admin (demo: compte temporaire pour les tests)'
          DISPLAY ' 0 - Quitter'
          DISPLAY ' '
          DISPLAY '-************************************-'
@@ -382,7 +384,7 @@
          DISPLAY ' 1 - Menu'
          DISPLAY ' 2 - Plat'
          DISPLAY ' 3 - Restaurant'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-************************************-'
          ACCEPT WmenuD
@@ -422,7 +424,7 @@
          DISPLAY ' 4 - Restaurant'
          DISPLAY ' 5 - Reservation'
          DISPLAY ' 6 - Utilisateur'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-************************************-'
          ACCEPT WmenuD
@@ -464,7 +466,7 @@
          DISPLAY 'Que souhaitez vous faire ?'
          DISPLAY ' 1 - Client'
          DISPLAY ' 2 - Reservation'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-************************************-'
          ACCEPT WmenuD

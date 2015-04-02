@@ -20,7 +20,7 @@
          DISPLAY ' 4 - Consulter une réservation'
          DISPLAY ' 5 - Consulter les statistiques de ventes'
          DISPLAY ' 6 - Supprimer une réservation'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-====================================-'
          ACCEPT Wmenu

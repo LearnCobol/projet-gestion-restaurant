@@ -15,7 +15,7 @@
          DISPLAY ' 3 - Modifier un menu'
          DISPLAY ' 4 - Supprimer un menu'
          DISPLAY ' 5 - Consulter les menus pour un budget'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-====================================-'
          ACCEPT Wmenu
@@ -50,7 +50,7 @@
          DISPLAY 'Que souhaitez vous faire ?'
          DISPLAY ' 1 - Consulter un menu'
          DISPLAY ' 2 - Consulter les menus pour un budget'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-================================-'
          ACCEPT Wmenu

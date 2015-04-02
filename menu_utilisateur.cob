@@ -20,7 +20,7 @@
          DISPLAY ' 3 - Supprimer un utilisateur'
          DISPLAY ' 4 - Consulter les utilisateurs pour un role' 
          DISPLAY ' 5 - Consulter tous les utilisateurs'      
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-====================================-'
          ACCEPT Wmenu

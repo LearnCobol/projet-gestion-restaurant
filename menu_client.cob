@@ -19,7 +19,7 @@
          DISPLAY ' 3 - Modifier un client'
          DISPLAY ' 4 - Supprimer un client'
          DISPLAY ' 5 - Calculer pourcentage de réduction'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-====================================-'
          ACCEPT Wmenu

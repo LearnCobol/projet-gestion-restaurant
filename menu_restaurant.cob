@@ -18,7 +18,7 @@
          DISPLAY ' 2 - Consulter les informations d un restaurant'
          DISPLAY ' 3 - Modifier un restaurant'
          DISPLAY ' 4 - Supprimer un restaurant'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-====================================-'
          ACCEPT Wmenu
@@ -51,7 +51,7 @@
         PERFORM WITH TEST AFTER UNTIL Wmenu>=0 AND Wmenu<=1
          DISPLAY 'Que souhaitez vous faire ?'
          DISPLAY ' 1 - Consulter les informations d''un restaurant'
-         DISPLAY ' 0 - Quitter'
+         DISPLAY ' 0 - Retour'
          DISPLAY ' '
          DISPLAY '-====================================-'
          ACCEPT Wmenu
